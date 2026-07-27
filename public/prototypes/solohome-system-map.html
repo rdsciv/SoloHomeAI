@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Solo Home AI — System Map</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet" />
+  <style>
+    :root, [data-theme="dark"] {
+      color-scheme: dark;
+      --color-bg: oklch(0.145 0.008 250);
+      --color-bg-elevated: oklch(0.165 0.009 250);
+      --color-surface: oklch(0.195 0.010 250);
+      --color-surface-hover: oklch(0.225 0.011 250);
+      --color-border: oklch(0.28 0.012 250);
+      --color-border-subtle: oklch(0.22 0.010 250);
+      --color-fg: oklch(0.96 0.005 95);
+      --color-fg-secondary: oklch(0.78 0.012 95);
+      --color-fg-muted: oklch(0.58 0.014 250);
+      --color-primary: oklch(0.68 0.075 185);
+      --color-primary-hover: oklch(0.74 0.080 185);
+      --color-primary-muted: oklch(0.68 0.075 185 / 0.14);
+      --color-accent: oklch(0.62 0.070 165);
+      --color-accent-secondary: oklch(0.72 0.055 200);
+      --color-success: oklch(0.72 0.10 155);
+      --color-warning: oklch(0.82 0.12 85);
+      --color-danger: oklch(0.65 0.14 25);
+      --color-info: oklch(0.72 0.06 230);
+      --color-primary-ink: oklch(0.16 0.02 200);
+      --shadow-sm: 0 1px 2px oklch(0 0 0 / 0.24);
+      --shadow-md: 0 8px 24px oklch(0 0 0 / 0.28);
+      --radius-sm: 6px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --font-serif: Newsreader, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+      --font-sans: Inter, system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+      --chart-grid: oklch(0.28 0.012 250 / 0.55);
+      --chart-axis: oklch(0.58 0.014 250);
+    }
+
+    [data-theme="light"] {
+      color-scheme: light;
+      --color-bg: oklch(0.985 0.004 95);
+      --color-bg-elevated: oklch(0.97 0.005 95);
+      --color-surface: oklch(1 0 0);
+      --color-surface-hover: oklch(0.96 0.006 95);
+      --color-border: oklch(0.88 0.008 250);
+      --color-border-subtle: oklch(0.92 0.006 95);
+      --color-fg: oklch(0.20 0.012 250);
+      --color-fg-secondary: oklch(0.40 0.014 250);
+      --color-fg-muted: oklch(0.55 0.012 250);
+      --color-primary: oklch(0.52 0.085 185);
+      --color-primary-hover: oklch(0.46 0.090 185);
+      --color-primary-muted: oklch(0.52 0.085 185 / 0.12);
+      --color-accent: oklch(0.48 0.080 165);
+      --color-accent-secondary: oklch(0.58 0.055 200);
+      --color-success: oklch(0.55 0.11 155);
+      --color-warning: oklch(0.70 0.13 85);
+      --color-danger: oklch(0.55 0.15 25);
+      --color-info: oklch(0.52 0.07 230);
+      --color-primary-ink: oklch(0.98 0.005 95);
+      --shadow-sm: 0 1px 2px oklch(0.30 0.02 250 / 0.06);
+      --shadow-md: 0 8px 24px oklch(0.30 0.02 250 / 0.08);
+      --chart-grid: oklch(0.88 0.008 250 / 0.8);
+      --chart-axis: oklch(0.55 0.012 250);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      font-family: var(--font-sans);
+      font-size: 15px;
+      line-height: 1.55;
+      color: var(--color-fg);
+      background: var(--color-bg);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .app {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr;
+    }
+
+    /* —— Top bar —— */
+    header.top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 24px;
+      border-bottom: 1px solid var(--color-border-subtle);
+      background: var(--color-bg-elevated);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+    .mark {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-md);
+      background: var(--color-primary-muted);
+      border: 1px solid oklch(0.68 0.075 185 / 0.28);
+      display: grid;
+      place-items: center;
+      color: var(--color-primary);
+      flex-shrink: 0;
+    }
+    .mark svg { width: 16px; height: 16px; }
+    .brand h1 {
+      margin: 0;
+      font-family: var(--font-serif);
+      font-size: 1.125rem;
+      font-weight: 500;
+      letter-spacing: -0.015em;
+      line-height: 1.2;
+    }
+    .brand p {
+      margin: 2px 0 0;
+      font-size: 12px;
+      color: var(--color-fg-muted);
+    }
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+      color: var(--color-fg-secondary);
+    }
+    .pill .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--color-success);
+    }
+    .pill.local {
+      background: var(--color-primary-muted);
+      color: var(--color-primary);
+      border-color: oklch(0.68 0.075 185 / 0.28);
+    }
+    .pill.local .dot { background: var(--color-primary); }
+    .btn {
+      appearance: none;
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+      color: var(--color-fg-secondary);
+      border-radius: var(--radius-md);
+      padding: 8px 12px;
+      font: 500 13px/1 var(--font-sans);
+      cursor: pointer;
+      transition: background 150ms ease, color 150ms ease, border-color 150ms ease;
+    }
+    .btn:hover {
+      background: var(--color-surface-hover);
+      color: var(--color-fg);
+    }
+    .btn:focus-visible {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 2px;
+    }
+    .btn.active {
+      background: var(--color-primary-muted);
+      color: var(--color-primary);
+      border-color: oklch(0.68 0.075 185 / 0.35);
+    }
+    .btn.ghost {
+      background: transparent;
+      border-color: transparent;
+      color: var(--color-fg-muted);
+    }
+    .btn.ghost:hover {
+      background: var(--color-surface);
+      color: var(--color-fg);
+      border-color: var(--color-border);
+    }
+    a.btn { text-decoration: none; display: inline-flex; align-items: center; }
+
+    /* Diagram tool: Architecture + Topology. Operations lives on the dashboard. */
+    .page-nav {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      padding: 3px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+    }
+    .page-nav a,
+    .page-nav button {
+      appearance: none;
+      border: none;
+      background: transparent;
+      color: var(--color-fg-muted);
+      font: 500 12px/1 var(--font-sans);
+      padding: 7px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+    }
+    .page-nav a:hover,
+    .page-nav button:hover {
+      color: var(--color-fg);
+      background: var(--color-surface-hover);
+    }
+    .page-nav a.active,
+    .page-nav button.active {
+      color: var(--color-primary);
+      background: var(--color-primary-muted);
+    }
+    .page-nav a:focus-visible,
+    .page-nav button:focus-visible {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 1px;
+    }
+    .page-nav .sep {
+      width: 1px;
+      height: 14px;
+      background: var(--color-border);
+      margin: 0 2px;
+    }
+    .page-nav .sub-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-fg-muted);
+      padding: 0 6px 0 8px;
+      opacity: 0.85;
+    }
+
+    /* —— Layout —— */
+    .shell {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      min-height: 0;
+    }
+    .shell.ops-mode {
+      grid-template-columns: 1fr;
+    }
+    .shell.ops-mode .inspector { display: none; }
+    @media (max-width: 1100px) {
+      .shell { grid-template-columns: 1fr; }
+      .inspector { border-left: none; border-top: 1px solid var(--color-border-subtle); }
+    }
+
+    .main {
+      min-width: 0;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .page { display: none; }
+    .page.active {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      min-height: 0;
+    }
+
+    .intro {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .intro .eyebrow {
+      margin: 0 0 6px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-fg-muted);
+    }
+    .intro h2 {
+      margin: 0;
+      font-family: var(--font-serif);
+      font-size: clamp(1.5rem, 2.4vw, 2rem);
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+    .intro .lead {
+      margin: 8px 0 0;
+      max-width: 46ch;
+      color: var(--color-fg-secondary);
+      font-size: 14px;
+    }
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 8px;
+      font-size: 12px;
+      color: var(--color-fg-muted);
+    }
+    .breadcrumb a {
+      color: var(--color-fg-secondary);
+      text-decoration: none;
+    }
+    .breadcrumb a:hover { color: var(--color-primary); }
+    .breadcrumb .here { color: var(--color-fg); }
+    .view-tabs {
+      display: inline-flex;
+      padding: 4px;
+      gap: 4px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+    }
+
+    .stage {
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      background: var(--color-surface);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      min-height: 520px;
+      position: relative;
+    }
+    .view { display: none; height: 100%; min-height: 520px; }
+    .view.active { display: block; }
+
+    /* —— Architecture diagram —— */
+    #arch-canvas {
+      width: 100%;
+      height: 560px;
+      display: block;
+      cursor: grab;
+    }
+    #arch-canvas:active { cursor: grabbing; }
+    .arch-node {
+      cursor: pointer;
+      transition: filter 150ms ease;
+    }
+    .arch-node:focus { outline: none; }
+    .arch-node:hover .node-body,
+    .arch-node[data-selected="true"] .node-body {
+      stroke: var(--color-primary);
+      stroke-width: 1.5;
+    }
+    .node-body {
+      fill: var(--color-bg-elevated);
+      stroke: var(--color-border);
+      stroke-width: 1;
+    }
+    .node-body.primary {
+      fill: var(--color-primary-muted);
+      stroke: oklch(0.68 0.075 185 / 0.4);
+    }
+    .node-body.danger {
+      fill: oklch(0.65 0.14 25 / 0.12);
+      stroke: oklch(0.65 0.14 25 / 0.35);
+    }
+    .node-label {
+      fill: var(--color-fg);
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .node-sub {
+      fill: var(--color-fg-muted);
+      font-family: var(--font-mono);
+      font-size: 10px;
+    }
+    .edge {
+      fill: none;
+      stroke: var(--color-border);
+      stroke-width: 1.25;
+    }
+    .edge.active {
+      stroke: var(--color-primary);
+      stroke-width: 1.75;
+    }
+    .edge.blocked {
+      stroke: var(--color-danger);
+      stroke-dasharray: 4 4;
+    }
+    .edge-label {
+      fill: var(--color-fg-muted);
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+    }
+    .layer-label {
+      fill: var(--color-fg-muted);
+      font-family: var(--font-sans);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .flow-dot {
+      fill: var(--color-primary);
+    }
+
+    /* —— Topology —— */
+    .topo-wrap {
+      display: grid;
+      grid-template-rows: auto 1fr;
+      height: 100%;
+      min-height: 520px;
+    }
+    .topo-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--color-border-subtle);
+      background: var(--color-bg-elevated);
+    }
+    .filter-chip {
+      appearance: none;
+      border: 1px solid var(--color-border);
+      background: transparent;
+      color: var(--color-fg-secondary);
+      border-radius: 999px;
+      padding: 5px 10px;
+      font: 500 12px/1 var(--font-sans);
+      cursor: pointer;
+    }
+    .filter-chip[aria-pressed="true"] {
+      background: var(--color-primary-muted);
+      color: var(--color-primary);
+      border-color: oklch(0.68 0.075 185 / 0.35);
+    }
+    #topo-svg {
+      width: 100%;
+      height: 480px;
+      display: block;
+    }
+    .topo-zone .zone-rect {
+      fill: var(--color-bg-elevated);
+      stroke: var(--color-border);
+      stroke-width: 1;
+    }
+    .topo-zone[data-selected="true"] .zone-rect {
+      stroke: var(--color-primary);
+      stroke-width: 1.5;
+      fill: var(--color-primary-muted);
+    }
+    .topo-zone .zone-title {
+      fill: var(--color-fg);
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .topo-zone .zone-meta {
+      fill: var(--color-fg-muted);
+      font-family: var(--font-mono);
+      font-size: 10px;
+    }
+    .device-node rect {
+      fill: var(--color-surface);
+      stroke: var(--color-border);
+      stroke-width: 1;
+    }
+    .device-node.local rect {
+      stroke: oklch(0.68 0.075 185 / 0.45);
+    }
+    .device-node.cloud rect {
+      stroke: oklch(0.82 0.12 85 / 0.45);
+    }
+    .device-node[data-selected="true"] rect {
+      stroke: var(--color-primary);
+      stroke-width: 1.5;
+    }
+    .device-node text {
+      fill: var(--color-fg);
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 500;
+    }
+    .device-node .dev-sub {
+      fill: var(--color-fg-muted);
+      font-size: 9.5px;
+      font-family: var(--font-mono);
+      font-weight: 400;
+    }
+    .link-line {
+      stroke: var(--color-border);
+      stroke-width: 1;
+      fill: none;
+    }
+    .link-line.local { stroke: oklch(0.68 0.075 185 / 0.45); }
+    .link-line.cloud { stroke: oklch(0.82 0.12 85 / 0.45); stroke-dasharray: 3 3; }
+
+    /* —— Operations (sub-page) —— */
+    .ops-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 16px;
+      padding: 20px;
+      min-height: 520px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      background: var(--color-surface);
+    }
+    @media (max-width: 900px) {
+      .ops-grid { grid-template-columns: 1fr; }
+    }
+    .chart-card {
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-md);
+      background: var(--color-bg-elevated);
+      padding: 16px;
+      min-height: 240px;
+      display: flex;
+      flex-direction: column;
+    }
+    .chart-card h3 {
+      margin: 0 0 4px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .chart-card .sub {
+      margin: 0 0 12px;
+      font-size: 12px;
+      color: var(--color-fg-muted);
+    }
+    .chart-el {
+      flex: 1;
+      min-height: 200px;
+      width: 100%;
+    }
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .stat {
+      padding: 10px 12px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border-subtle);
+      background: var(--color-surface);
+    }
+    .stat .k {
+      font-size: 11px;
+      color: var(--color-fg-muted);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+    .stat .v {
+      margin-top: 4px;
+      font-family: var(--font-serif);
+      font-size: 22px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      font-variant-numeric: tabular-nums;
+    }
+    .stat .d {
+      margin-top: 2px;
+      font-size: 11px;
+      color: var(--color-success);
+      font-family: var(--font-mono);
+    }
+    .stat .d.down { color: var(--color-danger); }
+    .stat .d.flat { color: var(--color-fg-muted); }
+
+    /* —— Inspector —— */
+    .inspector {
+      border-left: 1px solid var(--color-border-subtle);
+      background: var(--color-bg-elevated);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      min-height: 0;
+    }
+    .inspector .section-label {
+      margin: 0;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-fg-muted);
+    }
+    .inspector h3 {
+      margin: 4px 0 0;
+      font-family: var(--font-serif);
+      font-size: 1.35rem;
+      font-weight: 500;
+      letter-spacing: -0.015em;
+      line-height: 1.25;
+    }
+    .inspector .desc {
+      margin: 0;
+      font-size: 13px;
+      color: var(--color-fg-secondary);
+      line-height: 1.55;
+    }
+    .meta-list {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .meta-list li {
+      display: grid;
+      grid-template-columns: 96px 1fr;
+      gap: 8px;
+      font-size: 12px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+    .meta-list .k { color: var(--color-fg-muted); }
+    .meta-list .v {
+      color: var(--color-fg);
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      word-break: break-all;
+    }
+    .badge-row { display: flex; flex-wrap: wrap; gap: 6px; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 500;
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+      color: var(--color-fg-secondary);
+    }
+    .badge.ok {
+      background: oklch(0.72 0.10 155 / 0.12);
+      color: var(--color-success);
+      border-color: oklch(0.72 0.10 155 / 0.28);
+    }
+    .badge.warn {
+      background: oklch(0.82 0.12 85 / 0.12);
+      color: var(--color-warning);
+      border-color: oklch(0.82 0.12 85 / 0.28);
+    }
+    .badge.bad {
+      background: oklch(0.65 0.14 25 / 0.12);
+      color: var(--color-danger);
+      border-color: oklch(0.65 0.14 25 / 0.28);
+    }
+    .badge.local {
+      background: var(--color-primary-muted);
+      color: var(--color-primary);
+      border-color: oklch(0.68 0.075 185 / 0.28);
+    }
+    .code-block {
+      margin: 0;
+      padding: 12px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      line-height: 1.5;
+      color: var(--color-fg-secondary);
+      white-space: pre-wrap;
+      overflow: auto;
+    }
+    .legend {
+      margin-top: auto;
+      padding-top: 12px;
+      border-top: 1px solid var(--color-border-subtle);
+    }
+    .legend-items {
+      display: grid;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--color-fg-secondary);
+    }
+    .swatch {
+      width: 14px;
+      height: 14px;
+      border-radius: 4px;
+      border: 1px solid var(--color-border);
+      flex-shrink: 0;
+    }
+    .swatch.line {
+      height: 2px;
+      border: none;
+      border-radius: 0;
+      background: var(--color-primary);
+    }
+    .swatch.dashed {
+      background: repeating-linear-gradient(
+        90deg,
+        var(--color-danger) 0 4px,
+        transparent 4px 8px
+      );
+      height: 2px;
+      border: none;
+    }
+
+    .hint {
+      font-size: 12px;
+      color: var(--color-fg-muted);
+      margin: 0;
+    }
+
+    @media (max-width: 720px) {
+      header.top { padding: 12px 16px; }
+      .main { padding: 16px; }
+      .stat-row { grid-template-columns: 1fr; }
+      #arch-canvas, #topo-svg { height: 420px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="top">
+      <div class="brand">
+        <div class="mark" aria-hidden="true">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M2 8h4l2-4 2 8 2-4h2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <h1>Solo Home AI · System Map</h1>
+          <p>Architecture &amp; home topology · diagram tool</p>
+        </div>
+      </div>
+      <div class="top-actions">
+        <nav class="page-nav" aria-label="Product sections">
+          <a href="index.html">Home</a>
+          <a href="solohome-dashboard.html">Dashboard</a>
+          <span class="sep" aria-hidden="true"></span>
+          <span class="sub-label">Sub</span>
+          <a href="solohome-dashboard.html#operations" id="nav-ops">Operations</a>
+        </nav>
+        <span class="pill local"><span class="dot"></span> local · egress denied</span>
+        <span class="pill"><span class="dot"></span> HA bridge · connected</span>
+        <button type="button" class="btn" id="theme-toggle" aria-label="Toggle theme">Theme</button>
+      </div>
+    </header>
+
+    <div class="shell" id="shell">
+      <main class="main">
+        <!-- Diagram: Architecture + Topology -->
+        <div class="page active" id="page-map" data-page-panel="map">
+        <div class="intro">
+          <div>
+            <p class="eyebrow">Diagram · architecture &amp; topology</p>
+            <h2>How intelligence reaches the house</h2>
+            <p class="lead">
+              Interactive map of the sovereign property manager: filtered Home Assistant gateway,
+              permissioned actions, and OHF-style local-first device inventory.
+              Household telemetry lives under Dashboard → Operations.
+            </p>
+          </div>
+          <div class="view-tabs" role="tablist" aria-label="Map view">
+            <button type="button" class="btn active" role="tab" aria-selected="true" data-view="architecture">Architecture</button>
+            <button type="button" class="btn" role="tab" aria-selected="false" data-view="topology">Home topology</button>
+          </div>
+        </div>
+
+        <section class="stage" aria-live="polite">
+          <!-- Architecture -->
+          <div class="view active" id="view-architecture" role="tabpanel">
+            <svg id="arch-canvas" viewBox="0 0 1100 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Solo Home AI architecture diagram">
+              <defs>
+                <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M0 0 L10 5 L0 10 z" fill="currentColor" style="color: var(--color-border)"/>
+                </marker>
+                <marker id="arrow-active" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M0 0 L10 5 L0 10 z" fill="currentColor" style="color: var(--color-primary)"/>
+                </marker>
+                <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+                  <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.18"/>
+                </filter>
+              </defs>
+
+              <!-- Layer labels -->
+              <text class="layer-label" x="48" y="36">Edge · on-prem</text>
+              <text class="layer-label" x="360" y="36">Control plane</text>
+              <text class="layer-label" x="700" y="36">Home fabric</text>
+
+              <!-- Edges (drawn first) -->
+              <g id="edges">
+                <path class="edge" id="e-user-agent" d="M180 140 C240 140, 260 140, 320 140" marker-end="url(#arrow)"/>
+                <path class="edge" id="e-agent-bridge" d="M500 160 C560 160, 580 200, 640 220" marker-end="url(#arrow)"/>
+                <path class="edge" id="e-bridge-ha" d="M820 240 C860 240, 880 260, 920 280" marker-end="url(#arrow)"/>
+                <path class="edge" id="e-ha-devices" d="M1000 320 C1020 360, 1020 380, 1000 420" marker-end="url(#arrow)"/>
+                <path class="edge" id="e-sense" d="M320 200 C300 280, 280 340, 320 400" marker-end="url(#arrow)"/>
+                <path class="edge" id="e-reason" d="M420 400 C480 400, 500 400, 560 400" marker-end="url(#arrow)"/>
+                <path class="edge" id="e-propose" d="M660 400 C700 400, 720 360, 740 300" marker-end="url(#arrow)"/>
+                <path class="edge blocked" id="e-block" d="M740 260 C780 200, 820 160, 900 120"/>
+                <text class="edge-label" x="250" y="128">chat / intent</text>
+                <text class="edge-label" x="540" y="188">ha_* tools</text>
+                <text class="edge-label" x="850" y="268">WS + REST</text>
+                <text class="edge-label" x="1010" y="380">entities</text>
+                <text class="edge-label" x="820" y="140" style="fill: var(--color-danger)">hard-block</text>
+              </g>
+
+              <!-- Animated flow particle path uses CSS + SMIL-free JS -->
+              <circle class="flow-dot" id="flow-dot" r="3.5" opacity="0.9" cx="180" cy="140"/>
+
+              <!-- Nodes -->
+              <g class="arch-node" data-id="homeowner" transform="translate(48,100)" tabindex="0" role="button" aria-label="Homeowner">
+                <rect class="node-body" width="132" height="80" rx="8"/>
+                <text class="node-label" x="16" y="32">Homeowner</text>
+                <text class="node-sub" x="16" y="52">intent · approve</text>
+              </g>
+
+              <g class="arch-node" data-id="runtime" transform="translate(48,300)" tabindex="0" role="button" aria-label="Local runtime">
+                <rect class="node-body primary" width="200" height="100" rx="8"/>
+                <text class="node-label" x="16" y="32">Local runtime</text>
+                <text class="node-sub" x="16" y="52">solohome-pm-7b</text>
+                <text class="node-sub" x="16" y="70">egress: denied</text>
+              </g>
+
+              <g class="arch-node" data-id="agent" transform="translate(320,100)" tabindex="0" role="button" aria-label="Property Manager agent">
+                <rect class="node-body primary" width="180" height="100" rx="8" filter="url(#soft)"/>
+                <text class="node-label" x="16" y="32">Property Manager</text>
+                <text class="node-sub" x="16" y="52">sense · reason</text>
+                <text class="node-sub" x="16" y="70">propose · act</text>
+              </g>
+
+              <g class="arch-node" data-id="permissions" transform="translate(320,360)" tabindex="0" role="button" aria-label="Permissions">
+                <rect class="node-body" width="180" height="88" rx="8"/>
+                <text class="node-label" x="16" y="30">Permissions</text>
+                <text class="node-sub" x="16" y="50">Always · Ask · Never</text>
+                <text class="node-sub" x="16" y="68">+ HA hard-blocks</text>
+              </g>
+
+              <g class="arch-node" data-id="bridge" transform="translate(640,180)" tabindex="0" role="button" aria-label="HA Bridge">
+                <rect class="node-body primary" width="180" height="120" rx="8" filter="url(#soft)"/>
+                <text class="node-label" x="16" y="30">HA Bridge</text>
+                <text class="node-sub" x="16" y="50">list · get · services</text>
+                <text class="node-sub" x="16" y="68">call_service</text>
+                <text class="node-sub" x="16" y="90">watch filters</text>
+              </g>
+
+              <g class="arch-node" data-id="blocks" transform="translate(640,80)" tabindex="0" role="button" aria-label="Hard blocks">
+                <rect class="node-body danger" width="180" height="72" rx="8"/>
+                <text class="node-label" x="16" y="28">Hard blocks</text>
+                <text class="node-sub" x="16" y="48">shell · hassio · pyscript</text>
+              </g>
+
+              <g class="arch-node" data-id="ha" transform="translate(920,240)" tabindex="0" role="button" aria-label="Home Assistant">
+                <rect class="node-body" width="140" height="100" rx="8"/>
+                <text class="node-label" x="14" y="32">Home Assistant</text>
+                <text class="node-sub" x="14" y="52">:8123 local</text>
+                <text class="node-sub" x="14" y="70">long-lived token</text>
+              </g>
+
+              <g class="arch-node" data-id="devices" transform="translate(880,420)" tabindex="0" role="button" aria-label="Devices and zones">
+                <rect class="node-body" width="180" height="88" rx="8"/>
+                <text class="node-label" x="16" y="30">Devices · zones</text>
+                <text class="node-sub" x="16" y="50">14 entities · OHF catalog</text>
+                <text class="node-sub" x="16" y="68">local-first badges</text>
+              </g>
+
+              <g class="arch-node" data-id="pipeline" transform="translate(520,360)" tabindex="0" role="button" aria-label="Agent pipeline">
+                <rect class="node-body" width="120" height="88" rx="8"/>
+                <text class="node-label" x="14" y="30">Pipeline</text>
+                <text class="node-sub" x="14" y="50">Sense → Reason</text>
+                <text class="node-sub" x="14" y="68">→ Propose → Act</text>
+              </g>
+            </svg>
+          </div>
+
+          <!-- Topology -->
+          <div class="view" id="view-topology" role="tabpanel" hidden>
+            <div class="topo-wrap">
+              <div class="topo-toolbar">
+                <button type="button" class="filter-chip" data-filter="all" aria-pressed="true">All</button>
+                <button type="button" class="filter-chip" data-filter="local" aria-pressed="false">Local only</button>
+                <button type="button" class="filter-chip" data-filter="cloud" aria-pressed="false">Requires internet</button>
+                <button type="button" class="filter-chip" data-filter="lighting" aria-pressed="false">Lighting</button>
+                <button type="button" class="filter-chip" data-filter="energy" aria-pressed="false">Energy</button>
+                <button type="button" class="filter-chip" data-filter="security" aria-pressed="false">Security</button>
+                <span class="hint" style="margin-left:auto">Click a zone or device · OHF connection badges</span>
+              </div>
+              <svg id="topo-svg" viewBox="0 0 1100 480" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Home zone and device topology"></svg>
+            </div>
+          </div>
+        </section>
+        </div><!-- /page-map -->
+      </main>
+
+      <aside class="inspector" id="inspector">
+        <div>
+          <p class="section-label">Selection</p>
+          <h3 id="insp-title">Property Manager</h3>
+          <p class="desc" id="insp-desc">
+            Local open-weight agent that senses Home Assistant state, reasons under house policy,
+            proposes actions, and calls services only when permissions allow.
+          </p>
+        </div>
+        <div class="badge-row" id="insp-badges">
+          <span class="badge local">local</span>
+          <span class="badge ok">online</span>
+        </div>
+        <ul class="meta-list" id="insp-meta">
+          <li><span class="k">Model</span><span class="v">solohome-pm-7b</span></li>
+          <li><span class="k">Egress</span><span class="v">denied</span></li>
+          <li><span class="k">Path</span><span class="v">Sense → Reason → Propose → Act</span></li>
+        </ul>
+        <pre class="code-block" id="insp-code">ha_get_state(entity_id="alarm_control_panel.home")
+→ armed_stay
+
+ha_call_service(
+  domain="climate",
+  service="set_temperature",
+  entity_id="climate.west_wing",
+  data={"temperature": 68}
+)  # requires Ask</pre>
+        <div class="legend">
+          <p class="section-label">Legend</p>
+          <div class="legend-items">
+            <div class="legend-item"><span class="swatch" style="background:var(--color-primary-muted);border-color:var(--color-primary)"></span> Control plane / local path</div>
+            <div class="legend-item"><span class="swatch line"></span> Allowed data / service flow</div>
+            <div class="legend-item"><span class="swatch dashed"></span> Hard-blocked domain</div>
+            <div class="legend-item"><span class="swatch" style="background:oklch(0.82 0.12 85 / 0.2);border-color:var(--color-warning)"></span> Requires internet (OHF)</div>
+          </div>
+          <p class="hint" style="margin-top:12px">This file is the architecture diagram. Marketing home → landing. Ops charts → Dashboard · Operations.</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const THEME_KEY = "solohome-system-map-theme";
+      const root = document.documentElement;
+      const themeBtn = document.getElementById("theme-toggle");
+
+      function applyTheme(t) {
+        root.setAttribute("data-theme", t);
+        localStorage.setItem(THEME_KEY, t);
+        themeBtn.textContent = t === "dark" ? "Light" : "Dark";
+      }
+      applyTheme(localStorage.getItem(THEME_KEY) || "dark");
+      themeBtn.addEventListener("click", () => {
+        applyTheme(root.getAttribute("data-theme") === "dark" ? "light" : "dark");
+      });
+
+      const nodes = {
+        homeowner: {
+          title: "Homeowner",
+          desc: "Issues natural-language intent and approves Ask-tier actions. Never bypasses hard blocks.",
+          badges: [["local", "local"], ["ok", "in residence"]],
+          meta: [
+            ["Role", "principal"],
+            ["Channel", "Property Manager chat"],
+            ["Approve", "temporary grants · setbacks"]
+          ],
+          code: `// User
+"Why is the west wing warm?"
+
+// Agent proposes
+set climate.west_wing → 68°F
+permission: Ask · pending approval`
+        },
+        runtime: {
+          title: "Local runtime",
+          desc: "On-prem inference for the property manager. No cloud egress; model weights and house memory stay on the LAN.",
+          badges: [["local", "local"], ["ok", "egress denied"]],
+          meta: [
+            ["Model", "solohome-pm-7b"],
+            ["Host", "NUC · LAN only"],
+            ["Memory", "house graph · policy"]
+          ],
+          code: `runtime.status
+  model=solohome-pm-7b
+  egress=denied
+  heartbeat=30s
+  reconnect=exp-backoff`
+        },
+        agent: {
+          title: "Property Manager",
+          desc: "Local open-weight agent that senses Home Assistant state, reasons under house policy, proposes actions, and calls services only when permissions allow.",
+          badges: [["local", "local"], ["ok", "online"]],
+          meta: [
+            ["Model", "solohome-pm-7b"],
+            ["Egress", "denied"],
+            ["Path", "Sense → Reason → Propose → Act"]
+          ],
+          code: `ha_get_state(entity_id="alarm_control_panel.home")
+→ armed_stay
+
+ha_call_service(
+  domain="climate",
+  service="set_temperature",
+  entity_id="climate.west_wing",
+  data={"temperature": 68}
+)  # requires Ask`
+        },
+        permissions: {
+          title: "Permissions",
+          desc: "Always / Ask / Never segmented policy for domains and services. Hard-blocks sit above this matrix and cannot be overridden from chat.",
+          badges: [["ok", "Always"], ["warn", "Ask"], ["bad", "Never"]],
+          meta: [
+            ["climate.set_temperature", "Ask"],
+            ["light.turn_on", "Always"],
+            ["alarm.disarm", "Never"]
+          ],
+          code: `policy.matrix
+  light.*              → Always
+  climate.set_*        → Ask
+  alarm_control_panel  → Never (disarm)
+  shell_command        → HARD BLOCK`
+        },
+        bridge: {
+          title: "HA Bridge",
+          desc: "Hermes-style dual path: WebSocket gateway for watched state, REST tools for list/get/call. Heartbeat 30s with reconnect backoff.",
+          badges: [["local", "gateway"], ["ok", "connected"]],
+          meta: [
+            ["URL", "http://homeassistant.local:8123"],
+            ["Auth", "long-lived token"],
+            ["Tools", "4 · ha_*"]
+          ],
+          code: `tools
+  ha_list_entities
+  ha_get_state
+  ha_list_services
+  ha_call_service
+
+watch: climate · binary_sensor
+       alarm_control_panel · light
+ignore: noisy motion / lux spam`
+        },
+        blocks: {
+          title: "Hard blocks",
+          desc: "Non-negotiable service domains. The agent cannot list, propose, or call these — separate from Always/Ask/Never.",
+          badges: [["bad", "non-negotiable"]],
+          meta: [
+            ["Blocked", "shell_command"],
+            ["Blocked", "command_line · python_script"],
+            ["Blocked", "pyscript · hassio · rest_command"]
+          ],
+          code: `HARD_BLOCKS = {
+  shell_command,
+  command_line,
+  python_script,
+  pyscript,
+  hassio,
+  rest_command
+}
+# no override from chat or Always`
+        },
+        ha: {
+          title: "Home Assistant",
+          desc: "Local automation hub. Solo Home talks only to the house instance — never a vendor cloud as the control plane.",
+          badges: [["local", "local URL"], ["ok", "heartbeat ok"]],
+          meta: [
+            ["Endpoint", "homeassistant.local:8123"],
+            ["Transport", "WebSocket + REST"],
+            ["Token", "long-lived · scoped"]
+          ],
+          code: `GET /api/
+Authorization: Bearer <llt>
+
+WS /api/websocket
+  subscribe: state_changed
+  filter: watch domains`
+        },
+        devices: {
+          title: "Devices · zones",
+          desc: "OHF-inspired inventory with Local vs Requires internet badges. Agent prefers local-control devices for automation.",
+          badges: [["local", "11 local"], ["warn", "3 internet"]],
+          meta: [
+            ["Count", "14 devices"],
+            ["Zones", "great room · west wing · suite · garage"],
+            ["Source", "OHF device database patterns"]
+          ],
+          code: `Hue Bridge          local
+Shelly Pro 3EM      local
+LUMI weather        local
+ZBT-1 coordinator   local
+IKEA BILRESA        local
+… cloud cams        requires internet`
+        },
+        pipeline: {
+          title: "Agent pipeline",
+          desc: "Sense filtered HA state → Reason with policy → Propose human-readable plan → Act via ha_call_service when allowed.",
+          badges: [["local", "deterministic path"], ["ok", "permissioned"]],
+          meta: [
+            ["Sense", "ha_get_state · events"],
+            ["Reason", "local model + policy"],
+            ["Act", "ha_call_service"]
+          ],
+          code: `Sense   → watch domains + get_state
+Reason  → house graph · permissions
+Propose → insight card / chat plan
+Act     → call_service | wait Ask | deny`
+        }
+      };
+
+      const insp = {
+        title: document.getElementById("insp-title"),
+        desc: document.getElementById("insp-desc"),
+        badges: document.getElementById("insp-badges"),
+        meta: document.getElementById("insp-meta"),
+        code: document.getElementById("insp-code")
+      };
+
+      function selectNode(id) {
+        const data = nodes[id] || nodes.agent;
+        document.querySelectorAll(".arch-node").forEach((el) => {
+          el.setAttribute("data-selected", el.getAttribute("data-id") === id ? "true" : "false");
+        });
+        // highlight related edges
+        const edgeMap = {
+          homeowner: ["e-user-agent"],
+          agent: ["e-user-agent", "e-agent-bridge", "e-sense"],
+          runtime: ["e-sense"],
+          permissions: ["e-reason", "e-propose"],
+          pipeline: ["e-sense", "e-reason", "e-propose"],
+          bridge: ["e-agent-bridge", "e-bridge-ha"],
+          blocks: ["e-block"],
+          ha: ["e-bridge-ha", "e-ha-devices"],
+          devices: ["e-ha-devices"]
+        };
+        document.querySelectorAll("#edges .edge").forEach((e) => e.classList.remove("active"));
+        (edgeMap[id] || []).forEach((eid) => {
+          const el = document.getElementById(eid);
+          if (el && !el.classList.contains("blocked")) el.classList.add("active");
+        });
+
+        insp.title.textContent = data.title;
+        insp.desc.textContent = data.desc;
+        insp.badges.innerHTML = data.badges
+          .map(([cls, label]) => `<span class="badge ${cls}">${label}</span>`)
+          .join("");
+        insp.meta.innerHTML = data.meta
+          .map(([k, v]) => `<li><span class="k">${k}</span><span class="v">${v}</span></li>`)
+          .join("");
+        insp.code.textContent = data.code;
+      }
+
+      document.querySelectorAll(".arch-node").forEach((el) => {
+        const id = el.getAttribute("data-id");
+        el.addEventListener("click", () => selectNode(id));
+        el.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            selectNode(id);
+          }
+        });
+      });
+      selectNode("agent");
+
+      // Flow particle along architecture path
+      const pathPoints = [
+        [180, 140], [320, 140], [410, 150], [500, 160],
+        [640, 220], [740, 240], [820, 240], [920, 280],
+        [990, 320], [1000, 420], [970, 460]
+      ];
+      let t = 0;
+      const dot = document.getElementById("flow-dot");
+      function animateDot() {
+        t = (t + 0.004) % 1;
+        const segs = pathPoints.length - 1;
+        const f = t * segs;
+        const i = Math.floor(f);
+        const u = f - i;
+        const a = pathPoints[i];
+        const b = pathPoints[Math.min(i + 1, segs)];
+        const x = a[0] + (b[0] - a[0]) * u;
+        const y = a[1] + (b[1] - a[1]) * u;
+        dot.setAttribute("cx", x);
+        dot.setAttribute("cy", y);
+        requestAnimationFrame(animateDot);
+      }
+      requestAnimationFrame(animateDot);
+
+      // —— Topology data ——
+      const zones = [
+        { id: "great", name: "Great room", x: 40, y: 40, w: 320, h: 200, area: "area.great_room" },
+        { id: "west", name: "West wing", x: 400, y: 40, w: 320, h: 200, area: "area.west_wing" },
+        { id: "suite", name: "Primary suite", x: 760, y: 40, w: 300, h: 200, area: "area.primary_suite" },
+        { id: "garage", name: "Garage / dock", x: 40, y: 280, w: 480, h: 170, area: "area.garage_dock" },
+        { id: "plant", name: "Utility plant", x: 560, y: 280, w: 500, h: 170, area: "area.utility" }
+      ];
+
+      const devices = [
+        { id: "hue", name: "Hue Bridge", zone: "great", cat: "lighting", conn: "local", entity: "bridge.hue", x: 60, y: 90 },
+        { id: "hue-motion", name: "Hue motion", zone: "great", cat: "lighting", conn: "local", entity: "binary_sensor.hue_motion_great", x: 200, y: 90 },
+        { id: "bilresa", name: "IKEA BILRESA", zone: "great", cat: "lighting", conn: "local", entity: "light.bilresa_floor", x: 60, y: 150 },
+        { id: "lumi-w", name: "LUMI weather", zone: "west", cat: "climate", conn: "local", entity: "sensor.lumi_weather_west", x: 420, y: 90 },
+        { id: "climate-w", name: "West climate", zone: "west", cat: "climate", conn: "local", entity: "climate.west_wing", x: 560, y: 90 },
+        { id: "light-w", name: "West lights", zone: "west", cat: "lighting", conn: "local", entity: "light.west_wing", x: 420, y: 150 },
+        { id: "alarm", name: "Alarm panel", zone: "suite", cat: "security", conn: "local", entity: "alarm_control_panel.home", x: 780, y: 90 },
+        { id: "cam", name: "Entry cam", zone: "suite", cat: "security", conn: "cloud", entity: "camera.entry", x: 920, y: 90 },
+        { id: "lock", name: "Primary lock", zone: "suite", cat: "security", conn: "local", entity: "lock.primary_suite", x: 780, y: 150 },
+        { id: "zbt", name: "ZBT-1 coord.", zone: "garage", cat: "infra", conn: "local", entity: "zha.zbt1", x: 60, y: 330 },
+        { id: "robot", name: "Robot dock", zone: "garage", cat: "infra", conn: "local", entity: "vacuum.dock", x: 220, y: 330 },
+        { id: "ev", name: "EVSE (local)", zone: "garage", cat: "energy", conn: "local", entity: "switch.evse", x: 380, y: 330 },
+        { id: "shelly", name: "Shelly Pro 3EM", zone: "plant", cat: "energy", conn: "local", entity: "sensor.shelly_3em", x: 580, y: 330 },
+        { id: "cloud-wx", name: "Cloud weather", zone: "plant", cat: "climate", conn: "cloud", entity: "weather.accuweather", x: 760, y: 330 },
+        { id: "voice", name: "Voice cloud", zone: "plant", cat: "infra", conn: "cloud", entity: "assist.cloud", x: 920, y: 330 }
+      ];
+
+      let topoFilter = "all";
+      const topoSvg = document.getElementById("topo-svg");
+
+      function deviceVisible(d) {
+        if (topoFilter === "all") return true;
+        if (topoFilter === "local") return d.conn === "local";
+        if (topoFilter === "cloud") return d.conn === "cloud";
+        return d.cat === topoFilter;
+      }
+
+      function selectDevice(d) {
+        document.querySelectorAll(".device-node").forEach((el) => {
+          el.setAttribute("data-selected", el.getAttribute("data-id") === d.id ? "true" : "false");
+        });
+        document.querySelectorAll(".topo-zone").forEach((el) => {
+          el.setAttribute("data-selected", el.getAttribute("data-id") === d.zone ? "true" : "false");
+        });
+        insp.title.textContent = d.name;
+        insp.desc.textContent = `${d.conn === "local" ? "Local control" : "Requires internet"} · ${d.cat} · bound to zone area. Prefer local devices for automation paths.`;
+        insp.badges.innerHTML =
+          `<span class="badge ${d.conn === "local" ? "local" : "warn"}">${d.conn === "local" ? "Local" : "Requires internet"}</span>` +
+          `<span class="badge">${d.cat}</span>`;
+        insp.meta.innerHTML = [
+          ["Entity", d.entity],
+          ["Zone", zones.find((z) => z.id === d.zone)?.area || d.zone],
+          ["Connection", d.conn],
+          ["Category", d.cat]
+        ]
+          .map(([k, v]) => `<li><span class="k">${k}</span><span class="v">${v}</span></li>`)
+          .join("");
+        insp.code.textContent =
+          d.conn === "local"
+            ? `ha_get_state(entity_id="${d.entity}")\n→ available · local path\n\n# preferred for agent Act step`
+            : `ha_get_state(entity_id="${d.entity}")\n→ available · requires internet\n\n# agent notes cloud dependency\n# not used for offline routines`;
+      }
+
+      function selectZone(z) {
+        document.querySelectorAll(".topo-zone").forEach((el) => {
+          el.setAttribute("data-selected", el.getAttribute("data-id") === z.id ? "true" : "false");
+        });
+        document.querySelectorAll(".device-node").forEach((el) => el.setAttribute("data-selected", "false"));
+        const kids = devices.filter((d) => d.zone === z.id);
+        insp.title.textContent = z.name;
+        insp.desc.textContent = `Architectural zone mapped to Home Assistant area. ${kids.length} devices currently filtered into this map.`;
+        insp.badges.innerHTML = `<span class="badge local">HA area</span><span class="badge">${kids.length} devices</span>`;
+        insp.meta.innerHTML = [
+          ["Area", z.area],
+          ["Devices", String(kids.length)],
+          ["Local", String(kids.filter((d) => d.conn === "local").length)],
+          ["Internet", String(kids.filter((d) => d.conn === "cloud").length)]
+        ]
+          .map(([k, v]) => `<li><span class="k">${k}</span><span class="v">${v}</span></li>`)
+          .join("");
+        insp.code.textContent = kids
+          .map((d) => `${d.entity.padEnd(36)} ${d.conn}`)
+          .join("\n") || "# no devices in filter";
+      }
+
+      function renderTopo() {
+        const ns = "http://www.w3.org/2000/svg";
+        while (topoSvg.firstChild) topoSvg.removeChild(topoSvg.firstChild);
+
+        // links from zone center to devices
+        devices.filter(deviceVisible).forEach((d) => {
+          const z = zones.find((x) => x.id === d.zone);
+          if (!z) return;
+          const line = document.createElementNS(ns, "path");
+          const zx = z.x + z.w / 2;
+          const zy = z.y + 36;
+          line.setAttribute("d", `M${zx} ${zy} L${d.x + 70} ${d.y + 18}`);
+          line.setAttribute("class", `link-line ${d.conn}`);
+          topoSvg.appendChild(line);
+        });
+
+        zones.forEach((z) => {
+          const g = document.createElementNS(ns, "g");
+          g.setAttribute("class", "topo-zone");
+          g.setAttribute("data-id", z.id);
+          g.setAttribute("tabindex", "0");
+          g.setAttribute("role", "button");
+          g.style.cursor = "pointer";
+          const rect = document.createElementNS(ns, "rect");
+          rect.setAttribute("class", "zone-rect");
+          rect.setAttribute("x", z.x);
+          rect.setAttribute("y", z.y);
+          rect.setAttribute("width", z.w);
+          rect.setAttribute("height", z.h);
+          rect.setAttribute("rx", "8");
+          const title = document.createElementNS(ns, "text");
+          title.setAttribute("class", "zone-title");
+          title.setAttribute("x", z.x + 16);
+          title.setAttribute("y", z.y + 28);
+          title.textContent = z.name;
+          const meta = document.createElementNS(ns, "text");
+          meta.setAttribute("class", "zone-meta");
+          meta.setAttribute("x", z.x + 16);
+          meta.setAttribute("y", z.y + 46);
+          meta.textContent = z.area;
+          g.appendChild(rect);
+          g.appendChild(title);
+          g.appendChild(meta);
+          g.addEventListener("click", (e) => {
+            e.stopPropagation();
+            selectZone(z);
+          });
+          g.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              selectZone(z);
+            }
+          });
+          topoSvg.appendChild(g);
+        });
+
+        devices.filter(deviceVisible).forEach((d) => {
+          const g = document.createElementNS(ns, "g");
+          g.setAttribute("class", `device-node ${d.conn}`);
+          g.setAttribute("data-id", d.id);
+          g.setAttribute("tabindex", "0");
+          g.setAttribute("role", "button");
+          g.style.cursor = "pointer";
+          const rect = document.createElementNS(ns, "rect");
+          rect.setAttribute("x", d.x);
+          rect.setAttribute("y", d.y);
+          rect.setAttribute("width", 140);
+          rect.setAttribute("height", 44);
+          rect.setAttribute("rx", "6");
+          const t1 = document.createElementNS(ns, "text");
+          t1.setAttribute("x", d.x + 10);
+          t1.setAttribute("y", d.y + 18);
+          t1.textContent = d.name;
+          const t2 = document.createElementNS(ns, "text");
+          t2.setAttribute("class", "dev-sub");
+          t2.setAttribute("x", d.x + 10);
+          t2.setAttribute("y", d.y + 34);
+          t2.textContent = d.conn === "local" ? "local" : "internet";
+          g.appendChild(rect);
+          g.appendChild(t1);
+          g.appendChild(t2);
+          g.addEventListener("click", (e) => {
+            e.stopPropagation();
+            selectDevice(d);
+          });
+          g.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              selectDevice(d);
+            }
+          });
+          topoSvg.appendChild(g);
+        });
+      }
+
+      document.querySelectorAll(".filter-chip").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          topoFilter = btn.getAttribute("data-filter");
+          document.querySelectorAll(".filter-chip").forEach((b) => {
+            b.setAttribute("aria-pressed", b === btn ? "true" : "false");
+          });
+          renderTopo();
+        });
+      });
+      renderTopo();
+
+      // —— Map views (Architecture | Topology) ——
+      // Operations lives on the dashboard as a sub-page.
+      const views = {
+        architecture: document.getElementById("view-architecture"),
+        topology: document.getElementById("view-topology")
+      };
+
+      document.querySelectorAll(".view-tabs [data-view]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const v = btn.getAttribute("data-view");
+          document.querySelectorAll(".view-tabs [data-view]").forEach((b) => {
+            const on = b === btn;
+            b.classList.toggle("active", on);
+            b.setAttribute("aria-selected", on ? "true" : "false");
+          });
+          Object.entries(views).forEach(([key, el]) => {
+            const on = key === v;
+            el.classList.toggle("active", on);
+            el.hidden = !on;
+          });
+          if (v === "architecture") selectNode("agent");
+          if (v === "topology") selectZone(zones[0]);
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,1537 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Solo Home AI — The Sovereign AI Property Manager</title>
+  <link rel="canonical" href="https://solohome.ai/" />
+  <meta name="description" content="Quiet luxury meets local open-weight AI. Intelligent automation for high-end homes without cloud lock-in." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet" />
+  <style>
+    :root, [data-theme="dark"] {
+      color-scheme: dark;
+      --color-bg: oklch(0.145 0.008 250);
+      --color-bg-elevated: oklch(0.165 0.009 250);
+      --color-surface: oklch(0.195 0.010 250);
+      --color-surface-hover: oklch(0.225 0.011 250);
+      --color-border: oklch(0.28 0.012 250);
+      --color-border-subtle: oklch(0.22 0.010 250);
+      --color-fg: oklch(0.96 0.005 95);
+      --color-fg-secondary: oklch(0.78 0.012 95);
+      --color-fg-muted: oklch(0.58 0.014 250);
+      --color-primary: oklch(0.68 0.075 185);
+      --color-primary-hover: oklch(0.74 0.080 185);
+      --color-primary-muted: oklch(0.68 0.075 185 / 0.14);
+      --color-accent: oklch(0.62 0.070 165);
+      --color-accent-secondary: oklch(0.72 0.055 200);
+      --color-success: oklch(0.72 0.10 155);
+      --color-warning: oklch(0.82 0.12 85);
+      --color-danger: oklch(0.65 0.14 25);
+      --color-info: oklch(0.72 0.06 230);
+      --color-primary-ink: oklch(0.16 0.02 200);
+      --shadow-sm: 0 1px 2px oklch(0 0 0 / 0.24);
+      --shadow-md: 0 8px 24px oklch(0 0 0 / 0.28);
+      --font-sans: Inter, system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      --font-serif: Newsreader, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+      --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+      --radius-sm: 6px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      --max: 1120px;
+    }
+
+    [data-theme="light"] {
+      color-scheme: light;
+      --color-bg: oklch(0.985 0.004 95);
+      --color-bg-elevated: oklch(0.97 0.005 95);
+      --color-surface: oklch(1 0 0);
+      --color-surface-hover: oklch(0.96 0.006 95);
+      --color-border: oklch(0.88 0.008 250);
+      --color-border-subtle: oklch(0.92 0.006 95);
+      --color-fg: oklch(0.20 0.012 250);
+      --color-fg-secondary: oklch(0.40 0.014 250);
+      --color-fg-muted: oklch(0.55 0.012 250);
+      --color-primary: oklch(0.52 0.085 185);
+      --color-primary-hover: oklch(0.46 0.090 185);
+      --color-primary-muted: oklch(0.52 0.085 185 / 0.12);
+      --color-accent: oklch(0.48 0.080 165);
+      --color-accent-secondary: oklch(0.58 0.055 200);
+      --color-success: oklch(0.55 0.11 155);
+      --color-warning: oklch(0.70 0.13 85);
+      --color-danger: oklch(0.55 0.15 25);
+      --color-info: oklch(0.52 0.07 230);
+      --color-primary-ink: oklch(0.98 0.005 95);
+      --shadow-sm: 0 1px 2px oklch(0.30 0.02 250 / 0.06);
+      --shadow-md: 0 8px 24px oklch(0.30 0.02 250 / 0.08);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.55;
+      color: var(--color-fg);
+      background: var(--color-bg);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    img, svg { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+    ul { list-style: none; }
+
+    .container {
+      width: min(100% - 2.5rem, var(--max));
+      margin-inline: auto;
+    }
+
+    .container-wide {
+      width: min(100% - 2.5rem, 1200px);
+      margin-inline: auto;
+    }
+
+    /* —— Header —— */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid transparent;
+      background: oklch(0.145 0.008 250 / 0.72);
+      backdrop-filter: blur(16px) saturate(1.2);
+      -webkit-backdrop-filter: blur(16px) saturate(1.2);
+      transition: border-color 200ms var(--ease), background 200ms var(--ease);
+    }
+
+    [data-theme="light"] .site-header {
+      background: oklch(0.985 0.004 95 / 0.8);
+    }
+
+    .site-header.is-scrolled {
+      border-bottom-color: var(--color-border-subtle);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      gap: 1.5rem;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+      font-weight: 600;
+      font-size: 0.9375rem;
+      letter-spacing: -0.02em;
+      flex-shrink: 0;
+    }
+
+    .logo-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      display: grid;
+      place-items: center;
+    }
+
+    .logo-mark svg { width: 16px; height: 16px; color: var(--color-primary); }
+
+    .nav-desktop {
+      display: none;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    @media (min-width: 900px) {
+      .nav-desktop { display: flex; }
+    }
+
+    .nav-desktop a {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.875rem;
+      color: var(--color-fg-secondary);
+      border-radius: var(--radius-sm);
+      transition: color 160ms var(--ease), background 160ms var(--ease);
+    }
+
+    .nav-desktop a:hover {
+      color: var(--color-fg);
+      background: var(--color-primary-muted);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    @media (min-width: 900px) {
+      #hdr-secondary { display: inline-flex !important; }
+    }
+    @media (max-width: 899px) {
+      #hdr-secondary { display: none !important; }
+    }
+
+    .theme-toggle {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border);
+      display: grid;
+      place-items: center;
+      color: var(--color-fg-secondary);
+      transition: background 160ms var(--ease), color 160ms var(--ease);
+    }
+
+    .theme-toggle:hover {
+      background: var(--color-surface);
+      color: var(--color-fg);
+    }
+
+    .theme-toggle .icon-sun { display: none; }
+    [data-theme="light"] .theme-toggle .icon-moon { display: none; }
+    [data-theme="light"] .theme-toggle .icon-sun { display: block; }
+
+    .menu-btn {
+      display: grid;
+      place-items: center;
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border);
+      color: var(--color-fg-secondary);
+    }
+
+    @media (min-width: 900px) {
+      .menu-btn { display: none; }
+    }
+
+    .mobile-nav {
+      display: none;
+      border-top: 1px solid var(--color-border-subtle);
+      padding: 0.75rem 0 1rem;
+    }
+
+    .mobile-nav.open { display: block; }
+
+    .mobile-nav a {
+      display: block;
+      padding: 0.75rem 0;
+      font-size: 0.9375rem;
+      color: var(--color-fg-secondary);
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+
+    .mobile-nav a:last-child { border-bottom: none; }
+
+    /* —— Buttons —— */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      height: 40px;
+      padding: 0 1.125rem;
+      border-radius: var(--radius-md);
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      transition: background 160ms var(--ease), border-color 160ms var(--ease), color 160ms var(--ease), transform 160ms var(--ease);
+      white-space: nowrap;
+    }
+
+    .btn:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px var(--color-primary-muted);
+    }
+
+    .btn-primary {
+      background: var(--color-primary);
+      color: var(--color-primary-ink);
+    }
+
+    .btn-primary:hover {
+      background: var(--color-primary-hover);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--color-fg);
+      border: 1px solid var(--color-border);
+    }
+
+    .btn-secondary:hover {
+      background: var(--color-surface);
+      border-color: var(--color-fg-muted);
+    }
+
+    .btn-lg {
+      height: 48px;
+      padding: 0 1.375rem;
+      font-size: 0.9375rem;
+    }
+
+    .btn-block { width: 100%; }
+
+    /* —— Typography helpers —— */
+    .overline {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-primary);
+      font-family: var(--font-sans);
+    }
+
+    .display {
+      font-family: var(--font-serif);
+      font-weight: 500;
+      font-size: clamp(2.25rem, 4.5vw, 3.5rem);
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+      color: var(--color-fg);
+    }
+
+    .h2 {
+      font-family: var(--font-serif);
+      font-weight: 500;
+      font-size: clamp(1.75rem, 3vw, 2.25rem);
+      line-height: 1.2;
+      letter-spacing: -0.015em;
+    }
+
+    .h3 {
+      font-family: var(--font-sans);
+      font-weight: 600;
+      font-size: 1.125rem;
+      line-height: 1.35;
+      letter-spacing: -0.01em;
+    }
+
+    .lead {
+      font-size: 1.125rem;
+      line-height: 1.6;
+      color: var(--color-fg-secondary);
+      max-width: 36em;
+    }
+
+    .muted { color: var(--color-fg-muted); }
+    .secondary { color: var(--color-fg-secondary); }
+
+    /* —— Hero —— */
+    .hero {
+      padding: clamp(3.5rem, 10vw, 6.5rem) 0 clamp(4rem, 12vw, 7rem);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 70% 0%, oklch(0.68 0.075 185 / 0.08), transparent 60%),
+        radial-gradient(ellipse 50% 40% at 10% 80%, oklch(0.62 0.07 165 / 0.05), transparent 55%);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      display: grid;
+      gap: 3rem;
+      align-items: center;
+      position: relative;
+    }
+
+    @media (min-width: 960px) {
+      .hero-grid {
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 3.5rem;
+      }
+    }
+
+    .hero-copy { max-width: 36rem; }
+
+    .hero-copy .overline { margin-bottom: 1.25rem; }
+
+    .hero-copy .display { margin-bottom: 1.25rem; }
+
+    .hero-copy .lead { margin-bottom: 2rem; }
+
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem 1.75rem;
+      font-size: 0.8125rem;
+      color: var(--color-fg-muted);
+    }
+
+    .hero-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--color-success);
+      box-shadow: 0 0 0 3px oklch(0.72 0.1 155 / 0.18);
+    }
+
+    /* Hero product frame */
+    .hero-frame {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+    }
+
+    .frame-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--color-border-subtle);
+      background: var(--color-bg-elevated);
+    }
+
+    .frame-bar-left {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      color: var(--color-fg-muted);
+      font-family: var(--font-mono);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      height: 24px;
+      padding: 0 0.625rem;
+      border-radius: 999px;
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      background: var(--color-primary-muted);
+      color: var(--color-primary);
+      border: 1px solid oklch(0.68 0.075 185 / 0.25);
+    }
+
+    .pill-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--color-success);
+    }
+
+    .frame-body { padding: 1.25rem; display: grid; gap: 0.875rem; }
+
+    .insight-card {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.125rem;
+      border-left: 2px solid var(--color-primary);
+    }
+
+    .insight-card .label {
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-fg-muted);
+      margin-bottom: 0.375rem;
+    }
+
+    .insight-card p {
+      font-size: 0.875rem;
+      color: var(--color-fg-secondary);
+      line-height: 1.5;
+    }
+
+    .insight-card strong { color: var(--color-fg); font-weight: 500; }
+
+    .status-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.625rem;
+    }
+
+    .status-tile {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-md);
+      padding: 0.875rem;
+    }
+
+    .status-tile .k {
+      font-size: 0.6875rem;
+      color: var(--color-fg-muted);
+      margin-bottom: 0.25rem;
+    }
+
+    .status-tile .v {
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+    }
+
+    .status-tile .v.ok { color: var(--color-success); }
+
+    /* —— Sections common —— */
+    section { padding: clamp(4rem, 10vw, 7rem) 0; }
+
+    .section-head {
+      max-width: 40rem;
+      margin-bottom: 3rem;
+    }
+
+    .section-head .overline { margin-bottom: 0.875rem; }
+    .section-head .h2 { margin-bottom: 1rem; }
+    .section-head .lead { font-size: 1.0625rem; }
+
+    .section-alt {
+      background: var(--color-bg-elevated);
+      border-block: 1px solid var(--color-border-subtle);
+    }
+
+    /* —— Problem / Solution —— */
+    .split-grid {
+      display: grid;
+      gap: 1rem;
+    }
+
+    @media (min-width: 800px) {
+      .split-grid { grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+    }
+
+    .compare-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      height: 100%;
+    }
+
+    .compare-card.problem {
+      border-color: oklch(0.65 0.14 25 / 0.35);
+    }
+
+    .compare-card.solution {
+      border-color: oklch(0.68 0.075 185 / 0.4);
+      box-shadow: 0 0 0 1px oklch(0.68 0.075 185 / 0.08);
+    }
+
+    .compare-tag {
+      display: inline-flex;
+      align-items: center;
+      height: 26px;
+      padding: 0 0.625rem;
+      border-radius: 999px;
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 1.125rem;
+    }
+
+    .compare-card.problem .compare-tag {
+      background: oklch(0.65 0.14 25 / 0.12);
+      color: var(--color-danger);
+    }
+
+    .compare-card.solution .compare-tag {
+      background: var(--color-primary-muted);
+      color: var(--color-primary);
+    }
+
+    .compare-card h3 {
+      font-family: var(--font-serif);
+      font-weight: 500;
+      font-size: 1.375rem;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.015em;
+    }
+
+    .compare-card > p {
+      color: var(--color-fg-secondary);
+      font-size: 0.9375rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .compare-list { display: grid; gap: 0.75rem; }
+
+    .compare-list li {
+      display: flex;
+      gap: 0.625rem;
+      font-size: 0.875rem;
+      color: var(--color-fg-secondary);
+      line-height: 1.45;
+    }
+
+    .compare-list .mark {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      margin-top: 1px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      font-size: 0.625rem;
+    }
+
+    .problem .mark {
+      background: oklch(0.65 0.14 25 / 0.15);
+      color: var(--color-danger);
+    }
+
+    .solution .mark {
+      background: var(--color-primary-muted);
+      color: var(--color-primary);
+    }
+
+    /* —— Pillars —— */
+    .pillars-grid {
+      display: grid;
+      gap: 1rem;
+    }
+
+    @media (min-width: 640px) {
+      .pillars-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (min-width: 1024px) {
+      .pillars-grid { grid-template-columns: repeat(5, 1fr); gap: 0.875rem; }
+    }
+
+    .pillar {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 1.375rem 1.25rem;
+      transition: border-color 200ms var(--ease), background 200ms var(--ease);
+    }
+
+    .pillar:hover {
+      border-color: oklch(0.68 0.075 185 / 0.45);
+      background: var(--color-surface-hover);
+    }
+
+    .pillar-num {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--color-primary);
+      margin-bottom: 1rem;
+    }
+
+    .pillar h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      margin-bottom: 0.5rem;
+    }
+
+    .pillar p {
+      font-size: 0.8125rem;
+      color: var(--color-fg-secondary);
+      line-height: 1.5;
+    }
+
+    /* —— How it works —— */
+    .flow {
+      display: grid;
+      gap: 0;
+      position: relative;
+    }
+
+    @media (min-width: 900px) {
+      .flow {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0;
+      }
+    }
+
+    .flow-step {
+      position: relative;
+      padding: 1.5rem 1.25rem;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+    }
+
+    .flow-step:first-child { border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
+    .flow-step:last-child { border-radius: 0 0 var(--radius-lg) var(--radius-lg); }
+
+    @media (min-width: 900px) {
+      .flow-step { border-radius: 0; }
+      .flow-step:not(:last-child) { border-right: none; }
+      .flow-step:first-child { border-radius: var(--radius-lg) 0 0 var(--radius-lg); }
+      .flow-step:last-child { border-radius: 0 var(--radius-lg) var(--radius-lg) 0; }
+    }
+
+    @media (max-width: 899px) {
+      .flow-step:not(:last-child) { border-bottom: none; }
+    }
+
+    .flow-index {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      border: 1px solid var(--color-border);
+      display: grid;
+      place-items: center;
+      font-size: 0.75rem;
+      font-weight: 500;
+      font-family: var(--font-mono);
+      color: var(--color-primary);
+      margin-bottom: 1rem;
+      background: var(--color-primary-muted);
+    }
+
+    .flow-step h3 {
+      font-size: 0.9375rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .flow-step p {
+      font-size: 0.8125rem;
+      color: var(--color-fg-secondary);
+      line-height: 1.5;
+    }
+
+    /* —— Robot-ready vision —— */
+    .vision-panel {
+      display: grid;
+      gap: 2rem;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: clamp(1.5rem, 4vw, 2.5rem);
+      overflow: hidden;
+    }
+
+    @media (min-width: 900px) {
+      .vision-panel {
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        gap: 3rem;
+      }
+    }
+
+    .vision-copy .overline { margin-bottom: 0.875rem; }
+    .vision-copy .h2 { margin-bottom: 1rem; font-size: clamp(1.5rem, 2.5vw, 1.875rem); }
+    .vision-copy p {
+      color: var(--color-fg-secondary);
+      font-size: 0.9375rem;
+      margin-bottom: 1.25rem;
+      max-width: 32em;
+    }
+
+    .vision-list {
+      display: grid;
+      gap: 0.625rem;
+    }
+
+    .vision-list li {
+      display: flex;
+      gap: 0.625rem;
+      font-size: 0.875rem;
+      color: var(--color-fg-secondary);
+    }
+
+    .vision-list li::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--color-primary);
+      margin-top: 0.45rem;
+      flex-shrink: 0;
+    }
+
+    .vision-diagram {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      min-height: 260px;
+      display: grid;
+      place-items: center;
+    }
+
+    .diagram {
+      width: 100%;
+      max-width: 340px;
+    }
+
+    .diagram text {
+      font-family: var(--font-sans);
+      font-size: 10px;
+      fill: var(--color-fg-muted);
+    }
+
+    .diagram .node-fill { fill: var(--color-surface); stroke: var(--color-border); }
+    .diagram .node-accent { fill: var(--color-primary-muted); stroke: var(--color-primary); }
+    .diagram .line { stroke: var(--color-border); stroke-width: 1; fill: none; }
+    .diagram .line-accent { stroke: var(--color-primary); stroke-width: 1; stroke-opacity: 0.5; fill: none; }
+
+    /* —— GC section —— */
+    .gc-layout {
+      display: grid;
+      gap: 2.5rem;
+    }
+
+    @media (min-width: 960px) {
+      .gc-layout {
+        grid-template-columns: 1fr 1.1fr;
+        gap: 3.5rem;
+        align-items: start;
+      }
+    }
+
+    .package-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .package-header {
+      padding: 1.5rem 1.5rem 1.25rem;
+      border-bottom: 1px solid var(--color-border-subtle);
+      background: var(--color-bg-elevated);
+    }
+
+    .package-header .overline { margin-bottom: 0.5rem; }
+
+    .package-header h3 {
+      font-family: var(--font-serif);
+      font-weight: 500;
+      font-size: 1.5rem;
+      letter-spacing: -0.015em;
+      margin-bottom: 0.375rem;
+    }
+
+    .package-header p {
+      font-size: 0.875rem;
+      color: var(--color-fg-secondary);
+    }
+
+    .package-body { padding: 0.5rem 0; }
+
+    .package-row {
+      display: flex;
+      gap: 1rem;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--color-border-subtle);
+      align-items: flex-start;
+    }
+
+    .package-row:last-child { border-bottom: none; }
+
+    .package-row .num {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--color-primary);
+      width: 1.5rem;
+      flex-shrink: 0;
+      padding-top: 0.15rem;
+    }
+
+    .package-row h4 {
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .package-row p {
+      font-size: 0.8125rem;
+      color: var(--color-fg-secondary);
+      line-height: 1.45;
+    }
+
+    .package-footer {
+      padding: 1.25rem 1.5rem;
+      border-top: 1px solid var(--color-border-subtle);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--color-bg-elevated);
+    }
+
+    .package-footer .note {
+      font-size: 0.8125rem;
+      color: var(--color-fg-muted);
+    }
+
+    /* —— Trust —— */
+    .trust-grid {
+      display: grid;
+      gap: 1rem;
+    }
+
+    @media (min-width: 700px) {
+      .trust-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .trust-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+    }
+
+    .trust-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-md);
+      background: var(--color-primary-muted);
+      border: 1px solid oklch(0.68 0.075 185 / 0.25);
+      display: grid;
+      place-items: center;
+      margin-bottom: 1.125rem;
+      color: var(--color-primary);
+    }
+
+    .trust-card h3 {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .trust-card p {
+      font-size: 0.875rem;
+      color: var(--color-fg-secondary);
+      line-height: 1.55;
+    }
+
+    .trust-mono {
+      margin-top: 1rem;
+      padding: 0.625rem 0.75rem;
+      background: var(--color-bg);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      color: var(--color-fg-muted);
+    }
+
+    /* —— Footer CTA —— */
+    .footer-cta {
+      text-align: center;
+      padding: clamp(4rem, 10vw, 6rem) 0;
+    }
+
+    .footer-cta .display {
+      font-size: clamp(1.875rem, 3.5vw, 2.75rem);
+      max-width: 16em;
+      margin: 0 auto 1rem;
+    }
+
+    .footer-cta .lead {
+      margin: 0 auto 2rem;
+      max-width: 30em;
+    }
+
+    .footer-cta .hero-ctas {
+      justify-content: center;
+      margin-bottom: 0;
+    }
+
+    /* —— Site footer —— */
+    .site-footer {
+      border-top: 1px solid var(--color-border-subtle);
+      padding: 2.5rem 0 2rem;
+    }
+
+    .footer-top {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: space-between;
+      margin-bottom: 2.5rem;
+    }
+
+    .footer-brand p {
+      margin-top: 0.75rem;
+      font-size: 0.875rem;
+      color: var(--color-fg-muted);
+      max-width: 22em;
+    }
+
+    .footer-cols {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2.5rem 3.5rem;
+    }
+
+    .footer-col h4 {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-fg-muted);
+      margin-bottom: 0.875rem;
+    }
+
+    .footer-col a {
+      display: block;
+      font-size: 0.875rem;
+      color: var(--color-fg-secondary);
+      padding: 0.25rem 0;
+      transition: color 160ms var(--ease);
+    }
+
+    .footer-col a:hover { color: var(--color-fg); }
+
+    .footer-bottom {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem 1.5rem;
+      justify-content: space-between;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--color-border-subtle);
+      font-size: 0.75rem;
+      color: var(--color-fg-muted);
+    }
+
+    /* reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="#top" aria-label="Solo Home AI home">
+        <span class="logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M2.5 7.5 L8 2.5 L13.5 7.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M4 7v5.5h8V7" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6.5 12.5v-2.5h3v2.5" stroke-linecap="round"/>
+          </svg>
+        </span>
+        Solo Home AI
+      </a>
+
+      <nav class="nav-desktop" aria-label="Primary">
+        <a href="#problem">Approach</a>
+        <a href="#pillars">Pillars</a>
+        <a href="#how">How it works</a>
+        <a href="#robot-ready">Robot-ready</a>
+        <a href="#gc">For GCs</a>
+        <a href="#trust">Sovereignty</a>
+        <a href="solohome-dashboard.html">Live app</a>
+        <a href="solohome-system-map.html">System map</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="theme-toggle" type="button" id="theme-toggle" aria-label="Toggle light and dark theme">
+          <svg class="icon-moon" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path d="M13 9.5A5.5 5.5 0 0 1 6.5 3 5.5 5.5 0 1 0 13 9.5z" stroke-linejoin="round"/>
+          </svg>
+          <svg class="icon-sun" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <circle cx="8" cy="8" r="3"/>
+            <path d="M8 1.5v1.5M8 13v1.5M1.5 8H3M13 8h1.5M3.2 3.2l1.1 1.1M11.7 11.7l1.1 1.1M3.2 12.8l1.1-1.1M11.7 4.3l1.1-1.1" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <a class="btn btn-secondary" href="solohome-dashboard.html" id="hdr-secondary" style="display:none">Live app</a>
+        <a class="btn btn-primary" href="#pilot">Request pilot</a>
+        <button class="menu-btn" type="button" id="menu-btn" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path d="M2.5 4.5h11M2.5 8h11M2.5 11.5h11" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div class="container mobile-nav" id="mobile-nav" hidden>
+      <nav aria-label="Mobile">
+        <a href="#problem">Approach</a>
+        <a href="#pillars">Pillars</a>
+        <a href="#how">How it works</a>
+        <a href="#robot-ready">Robot-ready</a>
+        <a href="#gc">For GCs</a>
+        <a href="#trust">Sovereignty</a>
+        <a href="solohome-dashboard.html">Live app</a>
+        <a href="solohome-system-map.html">System map</a>
+        <a href="#pilot">Request pilot</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="overline">solohome.ai · Local-first property intelligence</p>
+          <h1 class="display">The sovereign AI property manager for homes that stay yours.</h1>
+          <p class="lead">
+            Quiet luxury meets local open-weight AI. Proactive intelligence for high-end homes —
+            without cloud lock-in, vendor surveillance, or DIY fragility.
+          </p>
+          <div class="hero-ctas">
+            <a class="btn btn-primary btn-lg" href="#pilot">For homeowners</a>
+            <a class="btn btn-secondary btn-lg" href="solohome-dashboard.html">Open live dashboard</a>
+          </div>
+          <div class="hero-meta">
+            <span><span class="dot" aria-hidden="true"></span> Runs on-prem · open weights</span>
+            <span>Permissioned agents</span>
+            <span>Seattle custom-home ready</span>
+          </div>
+        </div>
+
+        <div class="hero-frame" aria-hidden="true">
+          <div class="frame-bar">
+            <div class="frame-bar-left">
+              <span>AI Property Manager</span>
+            </div>
+            <span class="pill"><span class="pill-dot"></span> Local · Online</span>
+          </div>
+          <div class="frame-body">
+            <div class="insight-card">
+              <div class="label">Proactive insight</div>
+              <p><strong>West wing is 2.1° above setpoint</strong> while unoccupied for 3 hours. Suggest setback to 66°F until 5:30 PM arrival — estimated 1.8 kWh saved.</p>
+            </div>
+            <div class="status-row">
+              <div class="status-tile">
+                <div class="k">Climate</div>
+                <div class="v ok">Nominal</div>
+              </div>
+              <div class="status-tile">
+                <div class="k">Security</div>
+                <div class="v ok">Armed stay</div>
+              </div>
+              <div class="status-tile">
+                <div class="k">Model</div>
+                <div class="v">Local runtime</div>
+              </div>
+            </div>
+            <div class="insight-card" style="border-left-color: var(--color-accent-secondary);">
+              <div class="label">Permission</div>
+              <p>Allow temporary climate policy for west wing? Scope: 4 hours · Reversible anytime.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROBLEM / SOLUTION -->
+    <section class="section-alt" id="problem">
+      <div class="container">
+        <div class="section-head">
+          <p class="overline">The gap</p>
+          <h2 class="h2">Cloud lock-in or fragile DIY. Neither is luxury.</h2>
+          <p class="lead">High-end homes deserve intelligence that is as durable as the architecture — not a vendor subscription or a weekend project that breaks on update day.</p>
+        </div>
+
+        <div class="split-grid">
+          <article class="compare-card problem">
+            <span class="compare-tag">Problem landscape</span>
+            <h3>Proprietary cloud ecosystems</h3>
+            <p>Polished until the policy changes. Your routines, scenes, and history live on someone else’s terms.</p>
+            <ul class="compare-list">
+              <li><span class="mark" aria-hidden="true">×</span> Data and automations tied to vendor uptime and pricing</li>
+              <li><span class="mark" aria-hidden="true">×</span> Opaque “AI” features with no inspectable policy</li>
+              <li><span class="mark" aria-hidden="true">×</span> Poor fit for multi-zone custom estates and GC handoff</li>
+              <li><span class="mark" aria-hidden="true">×</span> Exit costs measured in months of rewiring logic</li>
+            </ul>
+          </article>
+
+          <article class="compare-card solution">
+            <span class="compare-tag">Solo Home AI</span>
+            <h3>Sovereign, open, production-grade</h3>
+            <p>Local open-weight models. Permissioned agents. A property manager posture — not another chat toy.</p>
+            <ul class="compare-list">
+              <li><span class="mark" aria-hidden="true">✓</span> Inference and memory stay on the property by default</li>
+              <li><span class="mark" aria-hidden="true">✓</span> Guardrails you can read, audit, and hand to owners</li>
+              <li><span class="mark" aria-hidden="true">✓</span> Elevated Home Assistant aesthetics with real hierarchy</li>
+              <li><span class="mark" aria-hidden="true">✓</span> Robot-ready packages designed with custom GCs</li>
+            </ul>
+          </article>
+        </div>
+
+        <p class="muted" style="margin-top: 1.5rem; font-size: 0.875rem; max-width: 42em;">
+          DIY Home Assistant is powerful — and often fragile at scale. Solo Home AI respects that craft while delivering the reliability, permissions model, and finish expected in a high-end home.
+        </p>
+      </div>
+    </section>
+
+    <!-- PILLARS -->
+    <section id="pillars">
+      <div class="container">
+        <div class="section-head">
+          <p class="overline">Design pillars</p>
+          <h2 class="h2">Five principles. No spectacle.</h2>
+          <p class="lead">A restrained system for homes that value calm, craft, and control over novelty.</p>
+        </div>
+
+        <div class="pillars-grid">
+          <article class="pillar">
+            <div class="pillar-num">01</div>
+            <h3>Sovereign by default</h3>
+            <p>Local open-weight models. Data leaves the property only under explicit policy.</p>
+          </article>
+          <article class="pillar">
+            <div class="pillar-num">02</div>
+            <h3>Permissioned agency</h3>
+            <p>Agents propose. Guardrails decide. Humans remain in the loop where it matters.</p>
+          </article>
+          <article class="pillar">
+            <div class="pillar-num">03</div>
+            <h3>Proactive, not chatty</h3>
+            <p>Insights when useful. Silence when systems are nominal. Respect attention.</p>
+          </article>
+          <article class="pillar">
+            <div class="pillar-num">04</div>
+            <h3>Built for custom homes</h3>
+            <p>Zones, scenes, and contractor packages — not plugin chaos or gadget clutter.</p>
+          </article>
+          <article class="pillar">
+            <div class="pillar-num">05</div>
+            <h3>Robot-ready foundation</h3>
+            <p>Wiring, sensors, and policy for a sensory platform that can grow with the home.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="section-alt" id="how">
+      <div class="container">
+        <div class="section-head">
+          <p class="overline">Agentic flow</p>
+          <h2 class="h2">How the property manager works</h2>
+          <p class="lead">A simple loop over a local Home Assistant bridge: observe via WebSocket, reason on-prem, propose within policy, act only with permission.</p>
+        </div>
+
+        <div class="flow" role="list">
+          <div class="flow-step" role="listitem">
+            <div class="flow-index">1</div>
+            <h3>Sense</h3>
+            <p>HA <code style="font-family:var(--font-mono);font-size:0.85em">state_changed</code> events and sensors stream into a filtered local gateway — not a public cloud.</p>
+          </div>
+          <div class="flow-step" role="listitem">
+            <div class="flow-index">2</div>
+            <h3>Reason</h3>
+            <p>Open-weight models evaluate entity state against home policy, schedules, and learned patterns on-prem.</p>
+          </div>
+          <div class="flow-step" role="listitem">
+            <div class="flow-index">3</div>
+            <h3>Propose</h3>
+            <p>Suggestions surface as clear insight cards with scope, duration, and expected effect — before any service call.</p>
+          </div>
+          <div class="flow-step" role="listitem">
+            <div class="flow-index">4</div>
+            <h3>Act</h3>
+            <p>REST tools execute only after Always / Ask / Never. Host-dangerous HA domains stay hard-blocked.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ROBOT-READY VISION -->
+    <section id="robot-ready">
+      <div class="container">
+        <div class="vision-panel">
+          <div class="vision-copy">
+            <p class="overline">Future sensory platform</p>
+            <h2 class="h2">Quiet infrastructure for robots that earn their keep.</h2>
+            <p>
+              Solo Home AI is designed as the policy and intelligence layer for homes that will host
+              mobile assistants, inspection platforms, and specialized appliances — without turning
+              the architecture into a showroom of LEDs.
+            </p>
+            <ul class="vision-list">
+              <li>Zone graphs and clearance maps suitable for future navigation</li>
+              <li>Power, networking, and sensor drops specified at rough-in</li>
+              <li>Permission scopes that extend from thermostats to mobile agents</li>
+              <li>Open interfaces — no single-vendor robot lock-in</li>
+            </ul>
+          </div>
+          <div class="vision-diagram" aria-hidden="true">
+            <svg class="diagram" viewBox="0 0 340 240" xmlns="http://www.w3.org/2000/svg">
+              <line class="line" x1="170" y1="48" x2="80" y2="110"/>
+              <line class="line" x1="170" y1="48" x2="260" y2="110"/>
+              <line class="line" x1="170" y1="48" x2="170" y2="120"/>
+              <line class="line-accent" x1="80" y1="140" x2="170" y2="170"/>
+              <line class="line-accent" x1="260" y1="140" x2="170" y2="170"/>
+              <line class="line-accent" x1="170" y1="140" x2="170" y2="170"/>
+              <rect class="node-accent" x="130" y="28" width="80" height="36" rx="8"/>
+              <text x="170" y="50" text-anchor="middle" fill="currentColor" style="fill: var(--color-primary)">Property Manager</text>
+              <rect class="node-fill" x="40" y="110" width="80" height="32" rx="6"/>
+              <text x="80" y="130" text-anchor="middle">Climate</text>
+              <rect class="node-fill" x="130" y="110" width="80" height="32" rx="6"/>
+              <text x="170" y="130" text-anchor="middle">Security</text>
+              <rect class="node-fill" x="220" y="110" width="80" height="32" rx="6"/>
+              <text x="260" y="130" text-anchor="middle">Energy</text>
+              <rect class="node-fill" x="100" y="170" width="140" height="36" rx="8"/>
+              <text x="170" y="192" text-anchor="middle">Policy · Permissions · Audit</text>
+              <text x="170" y="228" text-anchor="middle" style="font-size:9px">Local runtime · open weights</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GC SECTION -->
+    <section class="section-alt" id="gc">
+      <div class="container">
+        <div class="gc-layout">
+          <div class="section-head" style="margin-bottom: 0;">
+            <p class="overline">General contractors</p>
+            <h2 class="h2">Specify robot-ready once. Hand off with confidence.</h2>
+            <p class="lead" style="margin-top: 1rem;">
+              For Seattle-area custom-home builders who want a coherent intelligence package —
+              not a shopping list of incompatible gadgets.
+            </p>
+            <p class="secondary" style="margin-top: 1.25rem; font-size: 0.9375rem; max-width: 32em;">
+              Solo Home AI partners on rough-in standards, zone documentation, and a homeowner
+              pilot that continues after certificate of occupancy. One package. Clear scope. Premium finish.
+            </p>
+            <div class="hero-ctas" style="margin-top: 1.75rem; margin-bottom: 0;">
+              <a class="btn btn-primary" href="#pilot">Specify robot-ready</a>
+              <a class="btn btn-secondary" href="#trust">Review sovereignty model</a>
+            </div>
+          </div>
+
+          <div class="package-card">
+            <div class="package-header">
+              <p class="overline">Standard package</p>
+              <h3>Robot-Ready Package</h3>
+              <p>Designed for new construction and major renovations on custom estates.</p>
+            </div>
+            <div class="package-body">
+              <div class="package-row">
+                <span class="num">01</span>
+                <div>
+                  <h4>Structured cabling &amp; power plan</h4>
+                  <p>Drop locations, PoE budget, and dedicated circuits for local compute and future mobility docks.</p>
+                </div>
+              </div>
+              <div class="package-row">
+                <span class="num">02</span>
+                <div>
+                  <h4>Sensor &amp; zone baseline</h4>
+                  <p>Climate, occupancy, contact, and environmental sensing mapped to architectural zones — not room labels alone.</p>
+                </div>
+              </div>
+              <div class="package-row">
+                <span class="num">03</span>
+                <div>
+                  <h4>Local runtime enclosure</h4>
+                  <p>Quiet, ventilated housing for open-weight models and integration bridges — serviceable without a cloud account.</p>
+                </div>
+              </div>
+              <div class="package-row">
+                <span class="num">04</span>
+                <div>
+                  <h4>Policy handoff kit</h4>
+                  <p>Owner-facing permissions defaults, GC documentation, and commissioning checklist for the AI Property Manager.</p>
+                </div>
+              </div>
+              <div class="package-row">
+                <span class="num">05</span>
+                <div>
+                  <h4>Pilot &amp; support window</h4>
+                  <p>Post-occupancy tuning with the homeowner — scenes, guardrails, and seasonal policies.</p>
+                </div>
+              </div>
+            </div>
+            <div class="package-footer">
+              <p class="note">Seattle metro preferred for early pilots</p>
+              <a class="btn btn-primary" href="#pilot">Talk to Solo Home</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRUST -->
+    <section id="trust">
+      <div class="container">
+        <div class="section-head">
+          <p class="overline">Trust &amp; sovereignty</p>
+          <h2 class="h2">Control you can inspect.</h2>
+          <p class="lead">Premium technology earns trust through clarity — local models, explicit permissions, and open source where it counts.</p>
+        </div>
+
+        <div class="trust-grid">
+          <article class="trust-card">
+            <div class="trust-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="3" y="7" width="12" height="8" rx="1.5"/>
+                <path d="M6 7V5.5a3 3 0 0 1 6 0V7" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3>Local open-weight models</h3>
+            <p>Inference runs on-property. No requirement to stream home state to a third-party model API for day-to-day management.</p>
+            <div class="trust-mono">runtime: local · weights: open · egress: policy</div>
+          </article>
+          <article class="trust-card">
+            <div class="trust-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="9" cy="9" r="6"/>
+                <path d="M9 6v3.5l2 1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3>Permissions &amp; guardrails</h3>
+            <p>Every capability is Always, Ask, or Never — by zone and by action class. Temporary grants expire. Full audit trail.</p>
+            <div class="trust-mono">climate.west · ask · 4h · reversible</div>
+          </article>
+          <article class="trust-card">
+            <div class="trust-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M4 12.5 L9 4.5 L14 12.5z" stroke-linejoin="round"/>
+                <path d="M9 8v2.5" stroke-linecap="round"/>
+                <circle cx="9" cy="12" r="0.6" fill="currentColor" stroke="none"/>
+              </svg>
+            </div>
+            <h3>Open source foundation</h3>
+            <p>Core integrations and policy surface are open for inspection. No black-box “trust us” automations for the systems that run your home.</p>
+            <div class="trust-mono">license: open · audit: welcome</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER CTA -->
+    <section class="section-alt footer-cta" id="pilot">
+      <div class="container">
+        <p class="overline" style="margin-bottom: 1rem;">Pilot program</p>
+        <h2 class="display">Bring sovereign intelligence home.</h2>
+        <p class="lead">
+          Limited pilots for high-end homeowners and Seattle custom-home general contractors.
+          We’ll scope zones, runtime, and guardrails with the same care as the build itself.
+        </p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary btn-lg" href="mailto:pilot@solohome.ai?subject=Homeowner%20pilot%20inquiry">Request a homeowner pilot</a>
+          <a class="btn btn-secondary btn-lg" href="mailto:gc@solohome.ai?subject=Robot-ready%20package%20inquiry">Contact for GC packages</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a class="logo" href="#top">
+            <span class="logo-mark" aria-hidden="true">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M2.5 7.5 L8 2.5 L13.5 7.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M4 7v5.5h8V7" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            Solo Home AI
+          </a>
+          <p>The sovereign, open-source AI property manager. Quiet luxury meets local open-weight AI.</p>
+        </div>
+        <div class="footer-cols">
+          <div class="footer-col">
+            <h4>Product</h4>
+            <a href="#pillars">Pillars</a>
+            <a href="#how">How it works</a>
+            <a href="#trust">Sovereignty</a>
+            <a href="solohome-dashboard.html">Live dashboard</a>
+            <a href="solohome-dashboard.html#operations">Operations</a>
+            <a href="solohome-system-map.html">System map</a>
+          </div>
+          <div class="footer-col">
+            <h4>Partners</h4>
+            <a href="#gc">General contractors</a>
+            <a href="#robot-ready">Robot-ready</a>
+            <a href="#pilot">Pilot program</a>
+          </div>
+          <div class="footer-col">
+            <h4>Contact</h4>
+            <a href="mailto:pilot@solohome.ai">pilot@solohome.ai</a>
+            <a href="mailto:gc@solohome.ai">gc@solohome.ai</a>
+            <a href="https://solohome.ai">solohome.ai</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Solo Home AI. All rights reserved.</span>
+        <span>Local-first · Permissioned · Open foundation</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var root = document.documentElement;
+      var header = document.getElementById("site-header");
+      var themeBtn = document.getElementById("theme-toggle");
+      var menuBtn = document.getElementById("menu-btn");
+      var mobileNav = document.getElementById("mobile-nav");
+
+      var stored = null;
+      try { stored = localStorage.getItem("solohome-theme"); } catch (e) {}
+      if (stored === "light" || stored === "dark") {
+        root.setAttribute("data-theme", stored);
+      }
+
+      themeBtn.addEventListener("click", function () {
+        var next = root.getAttribute("data-theme") === "light" ? "dark" : "light";
+        root.setAttribute("data-theme", next);
+        try { localStorage.setItem("solohome-theme", next); } catch (e) {}
+      });
+
+      function onScroll() {
+        if (window.scrollY > 8) header.classList.add("is-scrolled");
+        else header.classList.remove("is-scrolled");
+      }
+      onScroll();
+      window.addEventListener("scroll", onScroll, { passive: true });
+
+      menuBtn.addEventListener("click", function () {
+        var open = menuBtn.getAttribute("aria-expanded") === "true";
+        menuBtn.setAttribute("aria-expanded", String(!open));
+        if (open) {
+          mobileNav.classList.remove("open");
+          mobileNav.hidden = true;
+        } else {
+          mobileNav.hidden = false;
+          mobileNav.classList.add("open");
+        }
+      });
+
+      mobileNav.querySelectorAll("a").forEach(function (a) {
+        a.addEventListener("click", function () {
+          menuBtn.setAttribute("aria-expanded", "false");
+          mobileNav.classList.remove("open");
+          mobileNav.hidden = true;
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
