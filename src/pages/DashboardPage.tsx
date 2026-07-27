@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { useTheme } from "../hooks/useTheme";
 import { mountDashboardInteractions } from "../lib/dashboardInteractions";
 import "../styles/dashboard.css";
+import { Link } from "react-router-dom";
 
 export default function DashboardPage() {
   const { toggleTheme } = useTheme();
@@ -100,8 +101,8 @@ export default function DashboardPage() {
         </div>
         <div className="topbar-actions">
           <nav className="product-links" aria-label="Product">
-            <a href="/">Home</a>
-            <a href="/system-map">System map</a>
+            <Link to="/">Home</Link>
+            <Link to="/system-map">System map</Link>
             <a href="#operations" data-panel="operations" id="ops-top-link">Operations</a>
           </nav>
           <span className="status-pill" title="Local inference online">

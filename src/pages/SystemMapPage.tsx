@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { useTheme } from "../hooks/useTheme";
 import { mountSystemMapInteractions } from "../lib/systemMapInteractions";
 import "../styles/system-map.css";
+import { Link } from "react-router-dom";
 
 export default function SystemMapPage() {
   const { theme, toggleTheme } = useTheme();
@@ -35,11 +36,11 @@ export default function SystemMapPage() {
       </div>
       <div className="top-actions">
         <nav className="page-nav" aria-label="Product sections">
-          <a href="/">Home</a>
-          <a href="/app">Dashboard</a>
+          <Link to="/">Home</Link>
+          <Link to="/app">Dashboard</Link>
           <span className="sep" aria-hidden="true"></span>
           <span className="sub-label">Sub</span>
-          <a href="/app#operations" id="nav-ops">Operations</a>
+          <Link to="/app?panel=operations" id="nav-ops">Operations</Link>
         </nav>
         <span className="pill local"><span className="dot"></span> local · egress denied</span>
         <span className="pill"><span className="dot"></span> HA bridge · connected</span>

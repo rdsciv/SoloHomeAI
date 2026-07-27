@@ -286,8 +286,13 @@ export function mountDashboardInteractions(
       ensureCharts();
       requestAnimationFrame(() => resizeCharts());
     }
-    if (history.replaceState) {
-      history.replaceState(null, "", id === "operations" ? "#operations" : "#");
+    // Keep panel in the hash query so deep links work: /#/app?panel=operations
+    try {
+      const hashPath = (window.location.hash || "#/app").split("?")[0] || "#/app";
+      const q = id === "operations" ? "?panel=operations" : "";
+      history.replaceState(null, "", `${window.location.pathname}${window.location.search}${hashPath}${q}`);
+    } catch {
+      /* ignore */
     }
     closeMobile();
   }
@@ -307,7 +312,15 @@ export function mountDashboardInteractions(
     cleanups.push(() => a.removeEventListener("click", handler));
   });
 
-  if (location.hash === "#operations") setPanel("operations");
+  // Initial panel from ?panel=operations (works with HashRouter: #/app?panel=operations)
+  const params = new URLSearchParams(
+    window.location.hash.includes("?")
+      ? window.location.hash.slice(window.location.hash.indexOf("?") + 1)
+      : window.location.search,
+  );
+  if (params.get("panel") === "operations" || window.location.hash.includes("operations")) {
+    setPanel("operations");
+  }
 
   if (openDrawer) {
     openDrawer.addEventListener("click", openMobile);

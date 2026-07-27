@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTheme } from "../hooks/useTheme";
 import "../styles/landing.css";
+import { Link } from "react-router-dom";
 
 export default function LandingPage() {
   const { toggleTheme } = useTheme();
@@ -80,8 +81,8 @@ export default function LandingPage() {
         <a href="#robot-ready">Robot-ready</a>
         <a href="#gc">For GCs</a>
         <a href="#trust">Sovereignty</a>
-        <a href="/app">Live app</a>
-        <a href="/system-map">System map</a>
+        <Link to="/app">Live app</Link>
+        <Link to="/system-map">System map</Link>
       </nav>
 
       <div className="header-actions">
@@ -94,7 +95,7 @@ export default function LandingPage() {
             <path d="M8 1.5v1.5M8 13v1.5M1.5 8H3M13 8h1.5M3.2 3.2l1.1 1.1M11.7 11.7l1.1 1.1M3.2 12.8l1.1-1.1M11.7 4.3l1.1-1.1" strokeLinecap="round" />
           </svg>
         </button>
-        <a className="btn btn-secondary" href="/app" id="hdr-secondary" style={{ display: 'none' }}>Live app</a>
+        <Link className="btn btn-secondary" to="/app" id="hdr-secondary">Live app</Link>
         <a className="btn btn-primary" href="#pilot">Request pilot</a>
         <button className="menu-btn" type="button" id="menu-btn" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
@@ -111,8 +112,8 @@ export default function LandingPage() {
         <a href="#robot-ready">Robot-ready</a>
         <a href="#gc">For GCs</a>
         <a href="#trust">Sovereignty</a>
-        <a href="/app">Live app</a>
-        <a href="/system-map">System map</a>
+        <Link to="/app">Live app</Link>
+        <Link to="/system-map">System map</Link>
         <a href="#pilot">Request pilot</a>
       </nav>
     </div>
@@ -131,7 +132,7 @@ export default function LandingPage() {
           </p>
           <div className="hero-ctas">
             <a className="btn btn-primary btn-lg" href="#pilot">For homeowners</a>
-            <a className="btn btn-secondary btn-lg" href="/app">Open live dashboard</a>
+            <Link className="btn btn-secondary btn-lg" to="/app">Open live dashboard</Link>
           </div>
           <div className="hero-meta">
             <span><span className="dot" aria-hidden="true"></span> Runs on-prem · open weights</span>
@@ -492,9 +493,9 @@ export default function LandingPage() {
             <a href="#pillars">Pillars</a>
             <a href="#how">How it works</a>
             <a href="#trust">Sovereignty</a>
-            <a href="/app">Live dashboard</a>
-            <a href="/app#operations">Operations</a>
-            <a href="/system-map">System map</a>
+            <Link to="/app">Live dashboard</Link>
+            <Link to="/app?panel=operations">Operations</Link>
+            <Link to="/system-map">System map</Link>
           </div>
           <div className="footer-col">
             <h4>Partners</h4>

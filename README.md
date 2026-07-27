@@ -19,11 +19,14 @@ There is **no stack conflict**: the Open Design source was static HTML/CSS/JS. T
 
 ## Routes
 
+Uses **HashRouter** so deep links work on static hosts (Vercel/GitHub Pages) without server rewrite issues.
+
 | Path | Surface |
 |------|---------|
-| `/` | Marketing landing |
-| `/app` | Homeowner dashboard (Overview, Manager, Zones, Devices, HA Bridge, Permissions, Operations) |
-| `/system-map` | Architecture + home topology diagram |
+| `/#/` | Marketing landing |
+| `/#/app` | Homeowner dashboard (Overview, Manager, Zones, Devices, HA Bridge, Permissions, Operations) |
+| `/#/app?panel=operations` | Dashboard → Operations charts |
+| `/#/system-map` | Architecture + home topology diagram |
 
 Original HTML prototypes (reference only) live under `public/prototypes/`.
 

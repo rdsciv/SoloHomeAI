@@ -1,4 +1,4 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import DashboardPage from "./pages/DashboardPage";
 import SystemMapPage from "./pages/SystemMapPage";
@@ -12,7 +12,7 @@ function ThemeBoot({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <ThemeBoot>
         <Routes>
           <Route path="/" element={<LandingPage />} />
@@ -22,6 +22,6 @@ export default function App() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </ThemeBoot>
-    </BrowserRouter>
+    </HashRouter>
   );
 }

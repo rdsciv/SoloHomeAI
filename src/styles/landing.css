@@ -164,11 +164,10 @@
       gap: 0.5rem;
     }
 
+    /* Header "Live app" secondary CTA — desktop only */
+    #hdr-secondary { display: none; }
     @media (min-width: 900px) {
-      #hdr-secondary { display: inline-flex !important; }
-    }
-    @media (max-width: 899px) {
-      #hdr-secondary { display: none !important; }
+      #hdr-secondary { display: inline-flex; }
     }
 
     .theme-toggle {
