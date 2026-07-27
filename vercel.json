@@ -2,6 +2,17 @@
   "version": 2,
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    { "source": "/app", "destination": "/#/app", "permanent": false },
+    { "source": "/app/", "destination": "/#/app", "permanent": false },
+    { "source": "/dashboard", "destination": "/#/app", "permanent": false },
+    { "source": "/dashboard/", "destination": "/#/app", "permanent": false },
+    { "source": "/system-map", "destination": "/#/system-map", "permanent": false },
+    { "source": "/system-map/", "destination": "/#/system-map", "permanent": false },
+    { "source": "/solohome-dashboard.html", "destination": "/#/app", "permanent": false },
+    { "source": "/solohome-system-map.html", "destination": "/#/system-map", "permanent": false },
+    { "source": "/solohome-landing.html", "destination": "/", "permanent": false }
+  ],
   "rewrites": [
     { "source": "/((?!assets/).*)", "destination": "/index.html" }
   ],

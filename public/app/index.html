@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Solo Home AI — Live app</title>
+    <meta http-equiv="refresh" content="0;url=/#/app" />
+    <script>
+      (function () {
+        var q = location.search || "";
+        var h = location.hash || "";
+        // Preserve ?panel=operations style query on the hash route
+        var target = "/#/app" + (q || "") + (h && h.indexOf("#/") !== 0 ? h : "");
+        if (h.indexOf("#/app") === 0) target = "/" + h + (q ? (h.indexOf("?") >= 0 ? "" : q) : "");
+        location.replace(target);
+      })();
+    </script>
+  </head>
+  <body style="font-family: system-ui, sans-serif; background: #12141a; color: #f4f3ef; padding: 2rem">
+    <p>Opening the live app…</p>
+    <p><a href="/#/app" style="color: #4a9e9a">Continue to Solo Home AI</a></p>
+  </body>
+</html>
