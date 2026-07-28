@@ -1,0 +1,293 @@
+# Instincts generated from https://github.com/rdsciv/SoloHomeAI
+# Generated: 2026-07-28T04:24:52.043Z
+# Version: 2.0
+# NOTE: This file supplements (does not replace) any existing curated instincts.
+# High-confidence manually curated instincts should be preserved alongside these.
+
+---
+id: SoloHomeAI-commit-length
+trigger: "when writing a commit message"
+confidence: 0.6
+domain: git
+source: repo-analysis
+source_repo: https://github.com/rdsciv/SoloHomeAI
+---
+
+# SoloHomeAI Commit Length
+
+## Action
+
+Keep commit messages concise (~40 characters)
+
+## Evidence
+
+- Average commit message length: 40 chars
+- Based on 5 commits
+
+---
+id: SoloHomeAI-naming-files
+trigger: "when creating a new file"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/rdsciv/SoloHomeAI
+---
+
+# SoloHomeAI Naming Files
+
+## Action
+
+Use camelCase naming convention
+
+## Evidence
+
+- Analyzed file naming patterns in repository
+- Dominant pattern: camelCase
+
+---
+id: SoloHomeAI-import-relative
+trigger: "when importing modules"
+confidence: 0.75
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/rdsciv/SoloHomeAI
+---
+
+# SoloHomeAI Import Relative
+
+## Action
+
+Use relative imports for project files
+
+## Evidence
+
+- Import analysis shows relative import pattern
+- Example: import { x } from '../lib/x'
+
+---
+id: SoloHomeAI-export-style
+trigger: "when exporting from a module"
+confidence: 0.7
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/rdsciv/SoloHomeAI
+---
+
+# SoloHomeAI Export Style
+
+## Action
+
+Prefer mixed exports
+
+## Evidence
+
+- Export pattern analysis
+- Dominant style: mixed
+
+---
+id: SoloHomeAI-arch-type-based
+trigger: "when adding new code"
+confidence: 0.8
+domain: architecture
+source: repo-analysis
+source_repo: https://github.com/rdsciv/SoloHomeAI
+---
+
+# SoloHomeAI Arch Type Based
+
+## Action
+
+Place code in the appropriate type folder (components/, services/, utils/, etc.)
+
+## Evidence
+
+- Type-based module organization detected
+- Folders: assets, hooks, lib, pages, raw
+
+---
+id: SoloHomeAI-test-separate
+trigger: "when writing tests"
+confidence: 0.8
+domain: testing
+source: repo-analysis
+source_repo: https://github.com/rdsciv/SoloHomeAI
+---
+
+# SoloHomeAI Test Separate
+
+## Action
+
+Place tests in the tests/ or __tests__/ directory, mirroring src structure
+
+## Evidence
+
+- Separate test directory pattern detected
+- Tests live in dedicated test folders
+
+---
+id: SoloHomeAI-workflow-update-routing-and-static-hosting
+trigger: "when doing update routing and static hosting"
+confidence: 0.6
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/rdsciv/SoloHomeAI
+---
+
+# SoloHomeAI Workflow Update Routing And Static Hosting
+
+## Action
+
+Follow the update-routing-and-static-hosting workflow:
+1. Edit or add static HTML files for affected routes in public/ (e.g., public/app.html, public/dashboard.html).
+2. Update vercel.json to declare new redirects or rewrites.
+3. Modify React Router usage or navigation logic in src/App.tsx and related page components.
+4. Update documentation (README.md) if navigation behavior changes.
+5. Adjust package.json or dependencies if routing libraries change.
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~2x per month
+- Files: public/*.html, public/*/index.html, vercel.json
+
+---
+id: solohomeai-instinct-naming-conventions
+trigger: "When creating new files, functions, classes, or constants in the codebase"
+confidence: 0.85
+domain: code-style
+source: repo-analysis
+source_repo: rdsciv/SoloHomeAI
+---
+
+# Solohomeai Instinct Naming Conventions
+
+## Action
+
+Name files and functions in camelCase, classes in PascalCase, and constants in SCREAMING_SNAKE_CASE
+
+## Evidence
+
+- Pattern in codeStyle.namingConventions
+- Consistent naming in src/ folder
+
+---
+id: solohomeai-instinct-import-style
+trigger: "When importing modules within the codebase"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: rdsciv/SoloHomeAI
+---
+
+# Solohomeai Instinct Import Style
+
+## Action
+
+Use relative import paths
+
+## Evidence
+
+- Pattern in codeStyle.importStyle
+- Observed in src/App.tsx and related files
+
+---
+id: solohomeai-instinct-export-style
+trigger: "When exporting functions, classes, or components"
+confidence: 0.7
+domain: code-style
+source: repo-analysis
+source_repo: rdsciv/SoloHomeAI
+---
+
+# Solohomeai Instinct Export Style
+
+## Action
+
+Use mixed export styles as appropriate (named and default exports)
+
+## Evidence
+
+- Pattern in codeStyle.exportStyle
+- Diverse export usage in src/ components
+
+---
+id: solohomeai-instinct-try-catch-error-handling
+trigger: "When handling errors in code"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: rdsciv/SoloHomeAI
+---
+
+# Solohomeai Instinct Try Catch Error Handling
+
+## Action
+
+Use try-catch blocks for error handling; do not use custom error classes or error boundaries
+
+## Evidence
+
+- Pattern in errorHandling.style
+- No evidence of custom error classes or error boundaries
+
+---
+id: solohomeai-instinct-testing-location
+trigger: "When adding or updating tests"
+confidence: 0.7
+domain: testing
+source: repo-analysis
+source_repo: rdsciv/SoloHomeAI
+---
+
+# Solohomeai Instinct Testing Location
+
+## Action
+
+Place test files in a separate location from the main src/ code (e.g., a dedicated tests/ or __tests__/ folder)
+
+## Evidence
+
+- Pattern in architecture.folderStructure.testLocation
+- No test files in src/; likely separate
+
+---
+id: solohomeai-instinct-git-commit-freeform
+trigger: "When writing a git commit message"
+confidence: 0.8
+domain: git
+source: repo-analysis
+source_repo: rdsciv/SoloHomeAI
+---
+
+# Solohomeai Instinct Git Commit Freeform
+
+## Action
+
+Use a freeform, concise message without a strict prefix; keep commit messages around 40 characters
+
+## Evidence
+
+- Pattern in commits.type and averageLength
+- Examples: 'Fix Vercel 404 for /app and related deep links'
+
+---
+id: solohomeai-instinct-update-routing-static-hosting
+trigger: "When navigation, deep linking, or static hosting issues (such as 404s) are detected, especially on static hosts like Vercel"
+confidence: 0.95
+domain: workflow
+source: repo-analysis
+source_repo: rdsciv/SoloHomeAI
+---
+
+# Solohomeai Instinct Update Routing Static Hosting
+
+## Action
+
+Edit or add static HTML files in public/, update vercel.json for rewrites/redirects, modify React Router logic in src/App.tsx and src/pages/, update README.md if navigation changes, and adjust package.json if routing dependencies change
+
+## Evidence
+
+- Workflow: update-routing-and-static-hosting
+- Commits: 'Fix Vercel 404 for /app and related deep links', 'Fix Live app navigation on static hosting'
+- Files: public/*.html, vercel.json, src/App.tsx, src/pages/*.tsx, README.md, package.json
+
