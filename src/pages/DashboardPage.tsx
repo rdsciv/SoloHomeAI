@@ -124,7 +124,7 @@ export default function DashboardPage() {
         {/*  OVERVIEW  */}
         <div className="panel active" id="panel-overview" data-title="Overview">
           <div className="section-label">Home status</div>
-          <div className="status-grid">
+          <div className="status-grid status-grid-6">
             <article className="stat-card">
               <div className="k">Climate <span className="status-pill" style={{ height: '20px', fontSize: '0.625rem' }}><span className="dot"></span> OK</span></div>
               <div className="v">68.4°F</div>
@@ -138,12 +138,133 @@ export default function DashboardPage() {
             <article className="stat-card">
               <div className="k">Energy now</div>
               <div className="v">2.4 kW</div>
-              <div className="hint">sensor.shelly_pro_3em</div>
+              <div className="hint">of which AI 0.18 kW</div>
+            </article>
+            <article className="stat-card">
+              <div className="k">Inference</div>
+              <div className="v ok">Online</div>
+              <div className="hint">solohome-pm-7b · 85 W idle</div>
+            </article>
+            <article className="stat-card">
+              <div className="k">Homelab</div>
+              <div className="v ok">Healthy</div>
+              <div className="hint">UPS 98% · NAS 42°C</div>
             </article>
             <article className="stat-card">
               <div className="k">HA bridge</div>
               <div className="v ok">Linked</div>
               <div className="hint">ws + rest · 47 entities</div>
+            </article>
+          </div>
+
+          <div className="home-features">
+            <article className="home-card">
+              <div className="home-card-head">
+                <h3>Family today</h3>
+                <span className="home-card-meta">Jul 27</span>
+              </div>
+              <ul className="family-list">
+                <li>
+                  <span className="event-time">5:30 PM</span>
+                  <span className="event-body">
+                    <strong>Soccer game</strong>
+                    <span className="event-sub">Emma · Riverside fields</span>
+                  </span>
+                  <span className="event-tag sport">Sport</span>
+                </li>
+                <li>
+                  <span className="event-time">7:30 PM</span>
+                  <span className="event-body">
+                    <strong>Movie night</strong>
+                    <span className="event-sub">Living room · Easy Rider</span>
+                  </span>
+                  <span className="event-tag movie">Movie</span>
+                </li>
+                <li>
+                  <span className="event-time">Chore</span>
+                  <span className="event-body">
+                    <strong>Take out recycling</strong>
+                    <span className="event-sub">Alex · due tonight</span>
+                  </span>
+                  <button type="button" className="btn btn-secondary btn-sm chore-done">Done</button>
+                </li>
+                <li>
+                  <span className="event-time">Chore</span>
+                  <span className="event-body">
+                    <strong>Empty dishwasher</strong>
+                    <span className="event-sub">Jordan · morning</span>
+                  </span>
+                  <button type="button" className="btn btn-ghost btn-sm chore-done">Done</button>
+                </li>
+              </ul>
+              <p className="home-card-ai">Garage usually opens ~5:20 on game days — arm stay after leave?</p>
+            </article>
+
+            <article className="home-card">
+              <div className="home-card-head">
+                <h3>Dinner ideas</h3>
+                <span className="home-card-meta">From fridge</span>
+              </div>
+              <p className="fridge-stock">Chicken · spinach · eggs · rice · cheddar · tortillas · yogurt</p>
+              <ul className="dinner-list">
+                <li>
+                  <strong>Chicken spinach tacos</strong>
+                  <span>25 min · uses chicken, spinach, tortillas, cheddar</span>
+                  <span className="dinner-badge best">Best match</span>
+                </li>
+                <li>
+                  <strong>Spinach egg fried rice</strong>
+                  <span>20 min · add soy sauce if you have it</span>
+                </li>
+                <li>
+                  <strong>Cheddar omelette + greens</strong>
+                  <span>15 min · light night before movie</span>
+                </li>
+              </ul>
+              <div className="insight-actions" style={{ marginTop: '0.75rem' }}>
+                <button type="button" className="btn btn-primary btn-sm">Cook tacos</button>
+                <button type="button" className="btn btn-secondary btn-sm">Shopping list</button>
+              </div>
+            </article>
+
+            <article className="home-card energy-mini">
+              <div className="home-card-head">
+                <h3>Energy distribution today</h3>
+                <a href="#operations" data-panel="operations" className="home-card-link">Full ops →</a>
+              </div>
+              <div className="energy-nodes" aria-hidden="true">
+                <div className="enode solar"><span className="enode-label">Solar</span><span className="enode-val">10.3 kWh</span></div>
+                <div className="enode grid"><span className="enode-label">Grid</span><span className="enode-val">↓1.3 · ↑6.4</span></div>
+                <div className="enode home"><span className="enode-label">Home</span><span className="enode-val">15.4 kWh</span></div>
+                <div className="enode infer"><span className="enode-label">LLM</span><span className="enode-val">1.4 kWh</span></div>
+                <div className="enode lab"><span className="enode-label">Homelab</span><span className="enode-val">3.2 kWh</span></div>
+                <div className="enode batt"><span className="enode-label">Battery</span><span className="enode-val">0 kWh</span></div>
+              </div>
+              <div className="energy-mini-stats">
+                <div><span className="k">AI share</span><span className="v">9%</span></div>
+                <div><span className="k">On solar</span><span className="v">72%</span></div>
+                <div><span className="k">Wh / kTok</span><span className="v">0.66</span></div>
+              </div>
+            </article>
+
+            <article className="home-card">
+              <div className="home-card-head">
+                <h3>Local intelligence</h3>
+                <span className="status-pill"><span className="dot"></span> Local</span>
+              </div>
+              <dl className="kv-list">
+                <div><dt>Model</dt><dd>solohome-pm-7b</dd></div>
+                <div><dt>Today</dt><dd>47 turns · 2.1 M tokens</dd></div>
+                <div><dt>Energy</dt><dd>1.4 kWh · 85 W idle</dd></div>
+                <div><dt>Egress</dt><dd className="ok">Denied by policy</dd></div>
+              </dl>
+              <div className="lab-strip" aria-label="Homelab services">
+                <span className="lab-svc ok">HA</span>
+                <span className="lab-svc ok">LLM</span>
+                <span className="lab-svc ok">NAS</span>
+                <span className="lab-svc ok">VPN</span>
+                <span className="lab-svc warn">Cams</span>
+              </div>
             </article>
           </div>
 
@@ -854,54 +975,266 @@ ha_get_state(entity_id="sensor.lumi_weather_west")
           </div>
         </div>
 
-        {/*  OPERATIONS (sub-page · household telemetry)  */}
+        {/*  OPERATIONS — energy + local LLM inference  */}
         <div className="panel" id="panel-operations" data-title="Operations">
-          <div className="ops-intro">
+          <div className="ops-intro ops-intro-wide">
             <p className="breadcrumb">
               <a href="#" data-panel="overview">Overview</a>
               <span aria-hidden="true">/</span>
               <span>Operations</span>
             </p>
-            <div className="section-label">Sub-page · household telemetry</div>
-            <h2>Operations</h2>
+            <div className="ops-tabs" role="tablist" aria-label="Operations views">
+              <button type="button" className="ops-tab active" data-ops-tab="summary" aria-selected="true">Summary</button>
+              <button type="button" className="ops-tab" data-ops-tab="electricity" aria-selected="false">Electricity</button>
+              <button type="button" className="ops-tab" data-ops-tab="intelligence" aria-selected="false">Intelligence</button>
+              <button type="button" className="ops-tab" data-ops-tab="control" aria-selected="false">Control</button>
+            </div>
+            <h2>Energy &amp; intelligence</h2>
             <p>
-              Energy load, permission outcomes, and filtered HA watch volume —
-              secondary to day-to-day Overview and Property Manager.
+              Household load with local LLM inference and homelab as first-class sources —
+              whole-home Shelly, inference node plug, rack PDU.
             </p>
+            <div className="live-power-badge" aria-live="polite">
+              <span className="dot" aria-hidden="true"></span>
+              Power usage <strong>2.4 kW</strong>
+              <span className="sep">·</span>
+              Inference <strong>180 W</strong>
+            </div>
           </div>
 
-          <div className="ops-grid">
-            <div className="chart-card span-2">
-              <h3>Household load · 24h</h3>
-              <p className="sub">Shelly Pro 3EM whole-home · local MQTT · kW</p>
-              <div className="ops-stat-row">
-                <div className="ops-stat">
-                  <div className="k">Now</div>
-                  <div className="v">1.8<span style={{ fontSize: '0.8rem', color: 'var(--color-fg-muted)', fontWeight: 500 }}> kW</span></div>
-                  <div className="d down">↓ 12% vs 24h avg</div>
-                </div>
-                <div className="ops-stat">
-                  <div className="k">Today</div>
-                  <div className="v">28.4<span style={{ fontSize: '0.8rem', color: 'var(--color-fg-muted)', fontWeight: 500 }}> kWh</span></div>
-                  <div className="d">on track for setback</div>
-                </div>
-                <div className="ops-stat">
-                  <div className="k">Agent acts</div>
-                  <div className="v">7</div>
-                  <div className="d">3 ask · 4 always</div>
+          {/* Summary tab */}
+          <div className="ops-tab-panel active" id="ops-summary" data-ops-panel="summary">
+            <div className="energy-layout">
+              <div className="chart-card energy-dist-card">
+                <h3>Energy distribution</h3>
+                <p className="sub">Today · solar · grid · inference · homelab</p>
+                <div className="dist-diagram">
+                  <div className="dist-node n-solar">
+                    <span className="dist-icon" aria-hidden="true">☀</span>
+                    <span className="dist-name">Solar</span>
+                    <span className="dist-val">10.3 kWh</span>
+                  </div>
+                  <div className="dist-node n-grid">
+                    <span className="dist-icon" aria-hidden="true">⚡</span>
+                    <span className="dist-name">Grid</span>
+                    <span className="dist-val">↓1.3 · ↑6.4 kWh</span>
+                  </div>
+                  <div className="dist-node n-home">
+                    <span className="dist-icon" aria-hidden="true">⌂</span>
+                    <span className="dist-name">Home</span>
+                    <span className="dist-val">15.4 kWh</span>
+                  </div>
+                  <div className="dist-node n-infer">
+                    <span className="dist-icon" aria-hidden="true">◆</span>
+                    <span className="dist-name">Inference</span>
+                    <span className="dist-val">1.4 kWh</span>
+                  </div>
+                  <div className="dist-node n-lab">
+                    <span className="dist-icon" aria-hidden="true">▣</span>
+                    <span className="dist-name">Homelab</span>
+                    <span className="dist-val">3.2 kWh</span>
+                  </div>
+                  <div className="dist-node n-batt">
+                    <span className="dist-icon" aria-hidden="true">▮</span>
+                    <span className="dist-name">Battery</span>
+                    <span className="dist-val">0 kWh</span>
+                  </div>
+                  <svg className="dist-lines" viewBox="0 0 400 220" preserveAspectRatio="none" aria-hidden="true">
+                    <path d="M100 40 C100 100, 200 80, 200 110" fill="none" stroke="var(--en-solar)" strokeWidth="2" opacity="0.7" />
+                    <path d="M40 110 C100 110, 160 110, 200 110" fill="none" stroke="var(--en-grid)" strokeWidth="2" opacity="0.7" />
+                    <path d="M200 110 C240 110, 300 70, 340 50" fill="none" stroke="var(--en-infer)" strokeWidth="2" opacity="0.7" />
+                    <path d="M200 110 C240 140, 300 150, 340 160" fill="none" stroke="var(--en-lab)" strokeWidth="2" opacity="0.7" />
+                    <path d="M200 110 C200 150, 160 180, 100 190" fill="none" stroke="var(--en-batt)" strokeWidth="2" opacity="0.45" />
+                  </svg>
                 </div>
               </div>
-              <div className="chart-el tall" id="chart-energy"></div>
+
+              <div className="chart-card">
+                <h3>Sources</h3>
+                <p className="sub">Usage today · local metering</p>
+                <table className="sources-table">
+                  <thead>
+                    <tr><th>Source</th><th>Usage</th><th>Cost</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td><span className="swatch sw-solar"></span> Solar total</td><td>10.3 kWh</td><td>—</td></tr>
+                    <tr><td><span className="swatch sw-grid"></span> Grid total</td><td>1.3 kWh</td><td>$0.18</td></tr>
+                    <tr><td><span className="swatch sw-infer"></span> Inference total</td><td>1.4 kWh</td><td>$0.19</td></tr>
+                    <tr><td><span className="swatch sw-lab"></span> Homelab total</td><td>3.2 kWh</td><td>$0.44</td></tr>
+                    <tr><td><span className="swatch sw-batt"></span> Battery total</td><td>0 kWh</td><td>—</td></tr>
+                    <tr className="row-muted"><td>AI share of home</td><td>9%</td><td>—</td></tr>
+                    <tr className="row-muted"><td>Inference on solar</td><td>72%</td><td>—</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="chart-card gauges-card">
+                <h3>Self-sufficiency</h3>
+                <p className="sub">Home · intelligence on solar</p>
+                <div className="gauge-row">
+                  <div className="gauge-item">
+                    <div className="chart-el gauge" id="chart-gauge-self"></div>
+                    <div className="gauge-label">Self-sufficiency</div>
+                  </div>
+                  <div className="gauge-item">
+                    <div className="chart-el gauge" id="chart-gauge-solar-ai"></div>
+                    <div className="gauge-label">AI on solar</div>
+                  </div>
+                  <div className="gauge-item">
+                    <div className="chart-el gauge" id="chart-gauge-net"></div>
+                    <div className="gauge-label">Net import</div>
+                  </div>
+                </div>
+                <div className="ops-stat-row" style={{ marginTop: '0.5rem', marginBottom: 0 }}>
+                  <div className="ops-stat">
+                    <div className="k">Net from grid</div>
+                    <div className="v" style={{ fontSize: '1rem' }}>1.3 kWh</div>
+                  </div>
+                  <div className="ops-stat">
+                    <div className="k">Wh / kTok</div>
+                    <div className="v" style={{ fontSize: '1rem' }}>0.66</div>
+                  </div>
+                  <div className="ops-stat">
+                    <div className="k">Cost of AI today</div>
+                    <div className="v" style={{ fontSize: '1rem' }}>$0.19</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="chart-card span-full">
+                <h3>Power sources</h3>
+                <p className="sub">24h · Solar · Grid · Homelab · Inference · Consumption</p>
+                <div className="chart-el tall" id="chart-power-sources"></div>
+              </div>
+
+              <div className="chart-card span-full">
+                <h3>Current power flow</h3>
+                <p className="sub">Live Sankey · sources → sinks including local model</p>
+                <div className="chart-el tall" id="chart-sankey"></div>
+              </div>
             </div>
-            <div className="chart-card">
-              <h3>Permission outcomes · 7d</h3>
-              <p className="sub">Always / Ask / Never vs hard-block denials</p>
-              <div className="chart-el" id="chart-perms"></div>
+          </div>
+
+          {/* Electricity tab */}
+          <div className="ops-tab-panel" id="ops-electricity" data-ops-panel="electricity" hidden>
+            <div className="energy-layout">
+              <div className="chart-card span-full">
+                <h3>Electricity usage</h3>
+                <p className="sub">Stacked by category · HVAC · house · homelab · inference · untracked</p>
+                <div className="ops-stat-row">
+                  <div className="ops-stat">
+                    <div className="k">Today</div>
+                    <div className="v">28.4<span style={{ fontSize: '0.8rem', color: 'var(--color-fg-muted)', fontWeight: 500 }}> kWh</span></div>
+                    <div className="d down">↓ 8% vs 7d</div>
+                  </div>
+                  <div className="ops-stat">
+                    <div className="k">Inference</div>
+                    <div className="v">1.4<span style={{ fontSize: '0.8rem', color: 'var(--color-fg-muted)', fontWeight: 500 }}> kWh</span></div>
+                    <div className="d">9% of home</div>
+                  </div>
+                  <div className="ops-stat">
+                    <div className="k">Homelab</div>
+                    <div className="v">3.2<span style={{ fontSize: '0.8rem', color: 'var(--color-fg-muted)', fontWeight: 500 }}> kWh</span></div>
+                    <div className="d">rack + NAS + HA</div>
+                  </div>
+                </div>
+                <div className="chart-el tall" id="chart-electricity"></div>
+              </div>
+              <div className="chart-card span-full">
+                <h3>Individual devices</h3>
+                <p className="sub">Smart plugs · PDU circuits · inference node</p>
+                <div className="chart-el" id="chart-devices"></div>
+              </div>
             </div>
-            <div className="chart-card">
-              <h3>Domain watch volume</h3>
-              <p className="sub">Events retained after noisy-sensor filter</p>
-              <div className="chart-el" id="chart-domains"></div>
+          </div>
+
+          {/* Intelligence tab */}
+          <div className="ops-tab-panel" id="ops-intelligence" data-ops-panel="intelligence" hidden>
+            <div className="energy-layout">
+              <div className="chart-card">
+                <h3>Inference power · 24h</h3>
+                <p className="sub">sensor.inference_node_power · W</p>
+                <div className="ops-stat-row">
+                  <div className="ops-stat">
+                    <div className="k">Now</div>
+                    <div className="v">180<span style={{ fontSize: '0.8rem', color: 'var(--color-fg-muted)', fontWeight: 500 }}> W</span></div>
+                    <div className="d">generating</div>
+                  </div>
+                  <div className="ops-stat">
+                    <div className="k">Idle baseline</div>
+                    <div className="v">85<span style={{ fontSize: '0.8rem', color: 'var(--color-fg-muted)', fontWeight: 500 }}> W</span></div>
+                    <div className="d">model resident</div>
+                  </div>
+                  <div className="ops-stat">
+                    <div className="k">Peak today</div>
+                    <div className="v">420<span style={{ fontSize: '0.8rem', color: 'var(--color-fg-muted)', fontWeight: 500 }}> W</span></div>
+                    <div className="d">vision + tools</div>
+                  </div>
+                </div>
+                <div className="chart-el" id="chart-inference"></div>
+              </div>
+              <div className="chart-card">
+                <h3>Workload mix</h3>
+                <p className="sub">Energy by job type today</p>
+                <div className="chart-el" id="chart-workload"></div>
+              </div>
+              <div className="chart-card span-full">
+                <h3>Efficiency</h3>
+                <p className="sub">Local model · no cloud egress for day-to-day</p>
+                <div className="eff-grid">
+                  <div className="ops-stat">
+                    <div className="k">Tokens today</div>
+                    <div className="v" style={{ fontSize: '1.1rem' }}>2.1 M</div>
+                    <div className="d">47 turns</div>
+                  </div>
+                  <div className="ops-stat">
+                    <div className="k">Wh / 1k tokens</div>
+                    <div className="v" style={{ fontSize: '1.1rem' }}>0.66</div>
+                    <div className="d">↓ better than yesterday</div>
+                  </div>
+                  <div className="ops-stat">
+                    <div className="k">tok/s per W</div>
+                    <div className="v" style={{ fontSize: '1.1rem' }}>0.07</div>
+                    <div className="d">at 180 W active</div>
+                  </div>
+                  <div className="ops-stat">
+                    <div className="k">Duty cycle</div>
+                    <div className="v" style={{ fontSize: '1.1rem' }}>18%</div>
+                    <div className="d">generating vs idle</div>
+                  </div>
+                  <div className="ops-stat">
+                    <div className="k">Avoided cloud $</div>
+                    <div className="v" style={{ fontSize: '1.1rem' }}>~$4.20</div>
+                    <div className="d">est. vs API tokens</div>
+                  </div>
+                  <div className="ops-stat">
+                    <div className="k">Quiet hours</div>
+                    <div className="v" style={{ fontSize: '1.1rem' }}>11p–6a</div>
+                    <div className="d">index paused</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Control tab (perms + domains) */}
+          <div className="ops-tab-panel" id="ops-control" data-ops-panel="control" hidden>
+            <div className="ops-grid">
+              <div className="chart-card">
+                <h3>Permission outcomes · 7d</h3>
+                <p className="sub">Always / Ask / Never vs hard-block denials</p>
+                <div className="chart-el" id="chart-perms"></div>
+              </div>
+              <div className="chart-card">
+                <h3>Domain watch volume</h3>
+                <p className="sub">Events retained after noisy-sensor filter</p>
+                <div className="chart-el" id="chart-domains"></div>
+              </div>
+              <div className="chart-card span-full" style={{ gridColumn: '1 / -1' }}>
+                <h3>Household load · 24h</h3>
+                <p className="sub">Whole-home vs setback target</p>
+                <div className="chart-el" id="chart-energy"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -936,9 +1269,19 @@ ha_get_state(entity_id="sensor.lumi_weather_west")
         </article>
         <article className="insight" style={{ borderLeftColor: 'var(--color-accent-secondary)' }}>
           <div className="label"><span>Energy</span><span>Today</span></div>
-          <h3>Load is calm</h3>
-          <p>House draw 12% below 7-day baseline. No action required.</p>
+          <h3>AI used 9% of kWh</h3>
+          <p>Inference 1.4 kWh · 72% solar-backed. Wh/kTok 0.66. Load calm overall.</p>
           <div className="insight-actions">
+            <button type="button" className="btn btn-secondary btn-sm" data-panel="operations">Ops</button>
+            <button type="button" className="btn btn-ghost">Dismiss</button>
+          </div>
+        </article>
+        <article className="insight">
+          <div className="label"><span>Family</span><span>Tonight</span></div>
+          <h3>Movie night 7:30</h3>
+          <p>Pause heavy indexing during movie? Living room scene ready after soccer pickup.</p>
+          <div className="insight-actions">
+            <button type="button" className="btn btn-primary btn-sm">Pause index</button>
             <button type="button" className="btn btn-ghost">Dismiss</button>
           </div>
         </article>
