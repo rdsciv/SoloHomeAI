@@ -57,20 +57,20 @@ export default function SystemMapPage() {
             <p className="eyebrow">Diagram · architecture &amp; topology</p>
             <h2>How intelligence reaches the house</h2>
             <p className="lead">
-              Interactive map of the sovereign property manager: filtered Home Assistant gateway,
-              permissioned actions, and OHF-style local-first device inventory.
-              Household telemetry lives under Dashboard → Operations.
+              Floor plan topology with live device pins, plus the architecture path from
+              homeowner intent through the local agent and HA bridge.
+              Household energy telemetry lives under Dashboard → Operations.
             </p>
           </div>
           <div className="view-tabs" role="tablist" aria-label="Map view">
-            <button type="button" className="btn active" role="tab" aria-selected="true" data-view="architecture">Architecture</button>
-            <button type="button" className="btn" role="tab" aria-selected="false" data-view="topology">Home topology</button>
+            <button type="button" className="btn" role="tab" aria-selected="false" data-view="architecture">Architecture</button>
+            <button type="button" className="btn active" role="tab" aria-selected="true" data-view="topology">Home topology</button>
           </div>
         </div>
 
         <section className="stage" aria-live="polite">
           {/*  Architecture  */}
-          <div className="view active" id="view-architecture" role="tabpanel">
+          <div className="view" id="view-architecture" role="tabpanel" hidden>
             <svg id="arch-canvas" viewBox="0 0 1100 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Solo Home AI architecture diagram">
               <defs>
                 <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
@@ -174,8 +174,8 @@ export default function SystemMapPage() {
             </svg>
           </div>
 
-          {/*  Topology  */}
-          <div className="view" id="view-topology" role="tabpanel" hidden>
+          {/*  Topology — real floor plan  */}
+          <div className="view active" id="view-topology" role="tabpanel">
             <div className="topo-wrap">
               <div className="topo-toolbar">
                 <button type="button" className="filter-chip" data-filter="all" aria-pressed="true">All</button>
@@ -184,9 +184,26 @@ export default function SystemMapPage() {
                 <button type="button" className="filter-chip" data-filter="lighting" aria-pressed="false">Lighting</button>
                 <button type="button" className="filter-chip" data-filter="energy" aria-pressed="false">Energy</button>
                 <button type="button" className="filter-chip" data-filter="security" aria-pressed="false">Security</button>
-                <span className="hint" style={{ marginLeft: 'auto' }}>Click a zone or device · OHF connection badges</span>
+                <button type="button" className="filter-chip" data-filter="climate" aria-pressed="false">Climate</button>
+                <span className="hint" style={{ marginLeft: 'auto' }}>Click a room or device pin · floor plan</span>
               </div>
-              <svg id="topo-svg" viewBox="0 0 1100 480" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Home zone and device topology"></svg>
+              <div className="topo-floor">
+                <img
+                  className="floor-plan-img"
+                  src="/floor-plan.jpg"
+                  alt="Apartment floor plan"
+                  width={1748}
+                  height={1376}
+                  decoding="async"
+                />
+                <svg
+                  id="topo-svg"
+                  viewBox="0 0 1748 1376"
+                  xmlns="http://www.w3.org/2000/svg"
+                  role="img"
+                  aria-label="Home zones and devices on floor plan"
+                ></svg>
+              </div>
             </div>
           </div>
         </section>
@@ -228,7 +245,7 @@ ha_call_service(
             <div className="legend-item"><span className="swatch dashed"></span> Hard-blocked domain</div>
             <div className="legend-item"><span className="swatch" style={{ background: 'oklch(0.82 0.12 85 / 0.2)', borderColor: 'var(--color-warning)' }}></span> Requires internet (OHF)</div>
           </div>
-          <p className="hint" style={{ marginTop: '12px' }}>This file is the architecture diagram. Marketing home → landing. Ops charts → Dashboard · Operations.</p>
+          <p className="hint" style={{ marginTop: '12px' }}>Home topology uses your floor plan. Architecture tab shows the control path. Ops → Dashboard · Operations.</p>
         </div>
       </aside>
     </div>

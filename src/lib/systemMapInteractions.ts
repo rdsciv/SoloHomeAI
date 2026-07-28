@@ -244,8 +244,9 @@ Act     → call_service | wait Ask | deny`
       ];
       let t = 0;
       const dot = $("#flow-dot");
+      const rafStore = window as unknown as { __soloMapRaf?: number };
       function animateDot() {
-        const _rafStore = window as unknown as { __soloMapRaf?: number };
+        if (!dot) return;
         t = (t + 0.004) % 1;
         const segs = pathPoints.length - 1;
         const f = t * segs;
@@ -255,41 +256,53 @@ Act     → call_service | wait Ask | deny`
         const b = pathPoints[Math.min(i + 1, segs)];
         const x = a[0] + (b[0] - a[0]) * u;
         const y = a[1] + (b[1] - a[1]) * u;
-        dot.setAttribute("cx", x);
-        dot.setAttribute("cy", y);
-        _rafStore.__soloMapRaf = requestAnimationFrame(animateDot);
+        dot.setAttribute("cx", String(x));
+        dot.setAttribute("cy", String(y));
+        rafStore.__soloMapRaf = requestAnimationFrame(animateDot);
       }
-      _rafStore.__soloMapRaf = requestAnimationFrame(animateDot);
+      rafStore.__soloMapRaf = requestAnimationFrame(animateDot);
 
-      // —— Topology data ——
+      // —— Topology on real floor plan (viewBox 1748×1376) ——
+      // Coordinates aligned to public/floor-plan.jpg
       const zones = [
-        { id: "great", name: "Great room", x: 40, y: 40, w: 320, h: 200, area: "area.great_room" },
-        { id: "west", name: "West wing", x: 400, y: 40, w: 320, h: 200, area: "area.west_wing" },
-        { id: "suite", name: "Primary suite", x: 760, y: 40, w: 300, h: 200, area: "area.primary_suite" },
-        { id: "garage", name: "Garage / dock", x: 40, y: 280, w: 480, h: 170, area: "area.garage_dock" },
-        { id: "plant", name: "Utility plant", x: 560, y: 280, w: 500, h: 170, area: "area.utility" }
+        { id: "primary", name: "Primary bedroom", x: 60, y: 50, w: 480, h: 400, area: "area.primary_bedroom" },
+        { id: "ensuite", name: "Ensuite bath", x: 60, y: 460, w: 380, h: 280, area: "area.ensuite" },
+        { id: "closet", name: "Walk-in closet", x: 60, y: 760, w: 300, h: 280, area: "area.closet" },
+        { id: "balcony", name: "Balcony", x: 560, y: 30, w: 300, h: 170, area: "area.balcony" },
+        { id: "living", name: "Living room", x: 560, y: 210, w: 520, h: 420, area: "area.living_room" },
+        { id: "kitchen", name: "Kitchen", x: 520, y: 650, w: 560, h: 420, area: "area.kitchen" },
+        { id: "bedroom2", name: "Bedroom 2", x: 1120, y: 50, w: 520, h: 380, area: "area.bedroom_2" },
+        { id: "bath2", name: "Hall bath", x: 1320, y: 450, w: 320, h: 300, area: "area.hall_bath" },
+        { id: "office", name: "Office / laundry", x: 1100, y: 780, w: 540, h: 380, area: "area.office_laundry" },
       ];
 
       const devices = [
-        { id: "hue", name: "Hue Bridge", zone: "great", cat: "lighting", conn: "local", entity: "bridge.hue", x: 60, y: 90 },
-        { id: "hue-motion", name: "Hue motion", zone: "great", cat: "lighting", conn: "local", entity: "binary_sensor.hue_motion_great", x: 200, y: 90 },
-        { id: "bilresa", name: "IKEA BILRESA", zone: "great", cat: "lighting", conn: "local", entity: "light.bilresa_floor", x: 60, y: 150 },
-        { id: "lumi-w", name: "LUMI weather", zone: "west", cat: "climate", conn: "local", entity: "sensor.lumi_weather_west", x: 420, y: 90 },
-        { id: "climate-w", name: "West climate", zone: "west", cat: "climate", conn: "local", entity: "climate.west_wing", x: 560, y: 90 },
-        { id: "light-w", name: "West lights", zone: "west", cat: "lighting", conn: "local", entity: "light.west_wing", x: 420, y: 150 },
-        { id: "alarm", name: "Alarm panel", zone: "suite", cat: "security", conn: "local", entity: "alarm_control_panel.home", x: 780, y: 90 },
-        { id: "cam", name: "Entry cam", zone: "suite", cat: "security", conn: "cloud", entity: "camera.entry", x: 920, y: 90 },
-        { id: "lock", name: "Primary lock", zone: "suite", cat: "security", conn: "local", entity: "lock.primary_suite", x: 780, y: 150 },
-        { id: "zbt", name: "ZBT-1 coord.", zone: "garage", cat: "infra", conn: "local", entity: "zha.zbt1", x: 60, y: 330 },
-        { id: "robot", name: "Robot dock", zone: "garage", cat: "infra", conn: "local", entity: "vacuum.dock", x: 220, y: 330 },
-        { id: "ev", name: "EVSE (local)", zone: "garage", cat: "energy", conn: "local", entity: "switch.evse", x: 380, y: 330 },
-        { id: "shelly", name: "Shelly Pro 3EM", zone: "plant", cat: "energy", conn: "local", entity: "sensor.shelly_3em", x: 580, y: 330 },
-        { id: "cloud-wx", name: "Cloud weather", zone: "plant", cat: "climate", conn: "cloud", entity: "weather.accuweather", x: 760, y: 330 },
-        { id: "voice", name: "Voice cloud", zone: "plant", cat: "infra", conn: "cloud", entity: "assist.cloud", x: 920, y: 330 }
+        { id: "climate-p", name: "Primary climate", zone: "primary", cat: "climate", conn: "local", entity: "climate.primary_bedroom", x: 280, y: 220 },
+        { id: "light-p", name: "Bedside lamps", zone: "primary", cat: "lighting", conn: "local", entity: "light.primary_bedside", x: 200, y: 300 },
+        { id: "motion-p", name: "Suite motion", zone: "primary", cat: "security", conn: "local", entity: "binary_sensor.primary_motion", x: 400, y: 160 },
+        { id: "light-ens", name: "Ensuite light", zone: "ensuite", cat: "lighting", conn: "local", entity: "light.ensuite", x: 220, y: 560 },
+        { id: "tv", name: "Living TV", zone: "living", cat: "infra", conn: "local", entity: "media_player.living_tv", x: 720, y: 280 },
+        { id: "hue-living", name: "Living lights", zone: "living", cat: "lighting", conn: "local", entity: "light.living_room", x: 800, y: 420 },
+        { id: "hue-motion", name: "Living motion", zone: "living", cat: "lighting", conn: "local", entity: "binary_sensor.living_motion", x: 640, y: 360 },
+        { id: "climate-l", name: "Living climate", zone: "living", cat: "climate", conn: "local", entity: "climate.living_room", x: 940, y: 320 },
+        { id: "fridge", name: "Fridge sensor", zone: "kitchen", cat: "energy", conn: "local", entity: "sensor.fridge_power", x: 620, y: 780 },
+        { id: "stove", name: "Range", zone: "kitchen", cat: "energy", conn: "local", entity: "sensor.range_power", x: 780, y: 980 },
+        { id: "light-k", name: "Kitchen lights", zone: "kitchen", cat: "lighting", conn: "local", entity: "light.kitchen", x: 900, y: 820 },
+        { id: "leak-k", name: "Under-sink leak", zone: "kitchen", cat: "security", conn: "local", entity: "binary_sensor.kitchen_leak", x: 680, y: 900 },
+        { id: "light-b2", name: "Bed 2 lights", zone: "bedroom2", cat: "lighting", conn: "local", entity: "light.bedroom_2", x: 1320, y: 200 },
+        { id: "climate-b2", name: "Bed 2 climate", zone: "bedroom2", cat: "climate", conn: "local", entity: "climate.bedroom_2", x: 1450, y: 280 },
+        { id: "alarm", name: "Alarm keypad", zone: "office", cat: "security", conn: "local", entity: "alarm_control_panel.home", x: 1180, y: 900 },
+        { id: "cam", name: "Entry cam", zone: "office", cat: "security", conn: "cloud", entity: "camera.entry", x: 1280, y: 1040 },
+        { id: "washer", name: "Washer", zone: "office", cat: "energy", conn: "local", entity: "sensor.washer_power", x: 1500, y: 1050 },
+        { id: "shelly", name: "Shelly Pro 3EM", zone: "office", cat: "energy", conn: "local", entity: "sensor.shelly_3em", x: 1420, y: 880 },
+        { id: "inference", name: "LLM node", zone: "office", cat: "infra", conn: "local", entity: "sensor.inference_node_power", x: 1550, y: 920 },
+        { id: "zbt", name: "ZBT-1 coord.", zone: "office", cat: "infra", conn: "local", entity: "zha.zbt1", x: 1350, y: 980 },
+        { id: "balcony-light", name: "Balcony light", zone: "balcony", cat: "lighting", conn: "local", entity: "light.balcony", x: 700, y: 100 },
+        { id: "cloud-wx", name: "Cloud weather", zone: "balcony", cat: "climate", conn: "cloud", entity: "weather.accuweather", x: 640, y: 140 },
       ];
 
       let topoFilter = "all";
-      const topoSvg = $("#topo-svg");
+      const topoSvg = $("#topo-svg") as SVGSVGElement | null;
 
       function deviceVisible(d) {
         if (topoFilter === "all") return true;
@@ -306,7 +319,7 @@ Act     → call_service | wait Ask | deny`
           el.setAttribute("data-selected", el.getAttribute("data-id") === d.zone ? "true" : "false");
         });
         insp.title.textContent = d.name;
-        insp.desc.textContent = `${d.conn === "local" ? "Local control" : "Requires internet"} · ${d.cat} · bound to zone area. Prefer local devices for automation paths.`;
+        insp.desc.textContent = `${d.conn === "local" ? "Local control" : "Requires internet"} · ${d.cat} · pinned on floor plan. Prefer local devices for automation paths.`;
         insp.badges.innerHTML =
           `<span class="badge ${d.conn === "local" ? "local" : "warn"}">${d.conn === "local" ? "Local" : "Requires internet"}</span>` +
           `<span class="badge">${d.cat}</span>`;
@@ -329,9 +342,9 @@ Act     → call_service | wait Ask | deny`
           el.setAttribute("data-selected", el.getAttribute("data-id") === z.id ? "true" : "false");
         });
         $$(".device-node").forEach((el) => el.setAttribute("data-selected", "false"));
-        const kids = devices.filter((d) => d.zone === z.id);
+        const kids = devices.filter((d) => d.zone === z.id && deviceVisible(d));
         insp.title.textContent = z.name;
-        insp.desc.textContent = `Architectural zone mapped to Home Assistant area. ${kids.length} devices currently filtered into this map.`;
+        insp.desc.textContent = `Room on the floor plan mapped to Home Assistant area. ${kids.length} devices in current filter.`;
         insp.badges.innerHTML = `<span class="badge local">HA area</span><span class="badge">${kids.length} devices</span>`;
         insp.meta.innerHTML = [
           ["Area", z.area],
@@ -347,48 +360,33 @@ Act     → call_service | wait Ask | deny`
       }
 
       function renderTopo() {
+        if (!topoSvg) return;
         const ns = "http://www.w3.org/2000/svg";
         while (topoSvg.firstChild) topoSvg.removeChild(topoSvg.firstChild);
 
-        // links from zone center to devices
-        devices.filter(deviceVisible).forEach((d) => {
-          const z = zones.find((x) => x.id === d.zone);
-          if (!z) return;
-          const line = document.createElementNS(ns, "path");
-          const zx = z.x + z.w / 2;
-          const zy = z.y + 36;
-          line.setAttribute("d", `M${zx} ${zy} L${d.x + 70} ${d.y + 18}`);
-          line.setAttribute("class", `link-line ${d.conn}`);
-          topoSvg.appendChild(line);
-        });
-
+        // Soft room hit areas over the floor plan
         zones.forEach((z) => {
           const g = document.createElementNS(ns, "g");
           g.setAttribute("class", "topo-zone");
           g.setAttribute("data-id", z.id);
           g.setAttribute("tabindex", "0");
           g.setAttribute("role", "button");
+          g.setAttribute("aria-label", z.name);
           g.style.cursor = "pointer";
           const rect = document.createElementNS(ns, "rect");
           rect.setAttribute("class", "zone-rect");
-          rect.setAttribute("x", z.x);
-          rect.setAttribute("y", z.y);
-          rect.setAttribute("width", z.w);
-          rect.setAttribute("height", z.h);
-          rect.setAttribute("rx", "8");
+          rect.setAttribute("x", String(z.x));
+          rect.setAttribute("y", String(z.y));
+          rect.setAttribute("width", String(z.w));
+          rect.setAttribute("height", String(z.h));
+          rect.setAttribute("rx", "18");
           const title = document.createElementNS(ns, "text");
           title.setAttribute("class", "zone-title");
-          title.setAttribute("x", z.x + 16);
-          title.setAttribute("y", z.y + 28);
+          title.setAttribute("x", String(z.x + 18));
+          title.setAttribute("y", String(z.y + 32));
           title.textContent = z.name;
-          const meta = document.createElementNS(ns, "text");
-          meta.setAttribute("class", "zone-meta");
-          meta.setAttribute("x", z.x + 16);
-          meta.setAttribute("y", z.y + 46);
-          meta.textContent = z.area;
           g.appendChild(rect);
           g.appendChild(title);
-          g.appendChild(meta);
           g.addEventListener("click", (e) => {
             e.stopPropagation();
             selectZone(z);
@@ -402,31 +400,48 @@ Act     → call_service | wait Ask | deny`
           topoSvg.appendChild(g);
         });
 
+        // Device pins
         devices.filter(deviceVisible).forEach((d) => {
           const g = document.createElementNS(ns, "g");
-          g.setAttribute("class", `device-node ${d.conn}`);
+          g.setAttribute("class", `device-node pin ${d.conn}`);
           g.setAttribute("data-id", d.id);
           g.setAttribute("tabindex", "0");
           g.setAttribute("role", "button");
+          g.setAttribute("aria-label", d.name);
           g.style.cursor = "pointer";
-          const rect = document.createElementNS(ns, "rect");
-          rect.setAttribute("x", d.x);
-          rect.setAttribute("y", d.y);
-          rect.setAttribute("width", 140);
-          rect.setAttribute("height", 44);
-          rect.setAttribute("rx", "6");
+          g.setAttribute("transform", `translate(${d.x}, ${d.y})`);
+
+          const pin = document.createElementNS(ns, "circle");
+          pin.setAttribute("class", "pin-dot");
+          pin.setAttribute("r", "14");
+          pin.setAttribute("cx", "0");
+          pin.setAttribute("cy", "0");
+
+          const ring = document.createElementNS(ns, "circle");
+          ring.setAttribute("class", "pin-ring");
+          ring.setAttribute("r", "22");
+          ring.setAttribute("cx", "0");
+          ring.setAttribute("cy", "0");
+
+          const labelBg = document.createElementNS(ns, "rect");
+          labelBg.setAttribute("class", "pin-label-bg");
+          labelBg.setAttribute("x", "18");
+          labelBg.setAttribute("y", "-14");
+          labelBg.setAttribute("height", "28");
+          labelBg.setAttribute("rx", "6");
+          const labelW = Math.max(72, d.name.length * 7.2 + 16);
+          labelBg.setAttribute("width", String(labelW));
+
           const t1 = document.createElementNS(ns, "text");
-          t1.setAttribute("x", d.x + 10);
-          t1.setAttribute("y", d.y + 18);
+          t1.setAttribute("class", "pin-label");
+          t1.setAttribute("x", "26");
+          t1.setAttribute("y", "5");
           t1.textContent = d.name;
-          const t2 = document.createElementNS(ns, "text");
-          t2.setAttribute("class", "dev-sub");
-          t2.setAttribute("x", d.x + 10);
-          t2.setAttribute("y", d.y + 34);
-          t2.textContent = d.conn === "local" ? "local" : "internet";
-          g.appendChild(rect);
+
+          g.appendChild(ring);
+          g.appendChild(pin);
+          g.appendChild(labelBg);
           g.appendChild(t1);
-          g.appendChild(t2);
           g.addEventListener("click", (e) => {
             e.stopPropagation();
             selectDevice(d);
@@ -443,7 +458,7 @@ Act     → call_service | wait Ask | deny`
 
       $$(".filter-chip").forEach((btn) => {
         btn.addEventListener("click", () => {
-          topoFilter = btn.getAttribute("data-filter");
+          topoFilter = btn.getAttribute("data-filter") || "all";
           $$(".filter-chip").forEach((b) => {
             b.setAttribute("aria-pressed", b === btn ? "true" : "false");
           });
@@ -451,9 +466,9 @@ Act     → call_service | wait Ask | deny`
         });
       });
       renderTopo();
+      selectZone(zones.find((z) => z.id === "living") || zones[0]);
 
       // —— Map views (Architecture | Topology) ——
-      // Operations lives on the dashboard as a sub-page.
       const views = {
         architecture: $("#view-architecture"),
         topology: $("#view-topology")
@@ -468,22 +483,21 @@ Act     → call_service | wait Ask | deny`
             b.setAttribute("aria-selected", on ? "true" : "false");
           });
           Object.entries(views).forEach(([key, el]) => {
+            if (!el) return;
             const on = key === v;
             el.classList.toggle("active", on);
             el.hidden = !on;
           });
           if (v === "architecture") selectNode("agent");
-          if (v === "topology") selectZone(zones[0]);
+          if (v === "topology") selectZone(zones.find((z) => z.id === "living") || zones[0]);
         });
       });
-    
 
   return {
     dispose: () => {
       cleanups.forEach((fn) => fn());
-      // stop flow animation if present
-      if (typeof (window as unknown as { __soloMapRaf?: number }).__soloMapRaf === "number") {
-        cancelAnimationFrame((window as unknown as { __soloMapRaf: number }).__soloMapRaf);
+      if (typeof rafStore.__soloMapRaf === "number") {
+        cancelAnimationFrame(rafStore.__soloMapRaf);
       }
     },
   };

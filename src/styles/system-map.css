@@ -408,7 +408,7 @@
       fill: var(--color-primary);
     }
 
-    /* —— Topology —— */
+    /* —— Topology (floor plan) —— */
     .topo-wrap {
       display: grid;
       grid-template-rows: auto 1fr;
@@ -439,31 +439,95 @@
       color: var(--color-primary);
       border-color: oklch(0.68 0.075 185 / 0.35);
     }
-    #topo-svg {
+    .topo-floor {
+      position: relative;
       width: 100%;
-      height: 480px;
+      background: #f3f1ec;
+      min-height: 420px;
+      max-height: min(78vh, 900px);
+      overflow: auto;
+    }
+    .floor-plan-img {
+      display: block;
+      width: 100%;
+      height: auto;
+      vertical-align: top;
+      user-select: none;
+      pointer-events: none;
+    }
+    #topo-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
       display: block;
     }
     .topo-zone .zone-rect {
-      fill: var(--color-bg-elevated);
-      stroke: var(--color-border);
-      stroke-width: 1;
+      fill: oklch(0.68 0.075 185 / 0.06);
+      stroke: oklch(0.68 0.075 185 / 0.22);
+      stroke-width: 2;
+      stroke-dasharray: 6 5;
+      transition: fill 140ms ease, stroke 140ms ease;
+    }
+    .topo-zone:hover .zone-rect {
+      fill: oklch(0.68 0.075 185 / 0.12);
+      stroke: oklch(0.68 0.075 185 / 0.45);
     }
     .topo-zone[data-selected="true"] .zone-rect {
       stroke: var(--color-primary);
-      stroke-width: 1.5;
-      fill: var(--color-primary-muted);
+      stroke-width: 3;
+      stroke-dasharray: none;
+      fill: oklch(0.68 0.075 185 / 0.18);
     }
     .topo-zone .zone-title {
-      fill: var(--color-fg);
+      fill: oklch(0.25 0.02 250);
       font-family: var(--font-sans);
-      font-size: 13px;
-      font-weight: 600;
+      font-size: 22px;
+      font-weight: 700;
+      paint-order: stroke;
+      stroke: oklch(1 0 0 / 0.85);
+      stroke-width: 4px;
+      pointer-events: none;
     }
     .topo-zone .zone-meta {
       fill: var(--color-fg-muted);
       font-family: var(--font-mono);
       font-size: 10px;
+    }
+    .device-node.pin .pin-dot {
+      fill: var(--color-primary);
+      stroke: #fff;
+      stroke-width: 3;
+    }
+    .device-node.pin.cloud .pin-dot {
+      fill: var(--color-warning);
+    }
+    .device-node.pin .pin-ring {
+      fill: none;
+      stroke: oklch(0.68 0.075 185 / 0.35);
+      stroke-width: 2;
+    }
+    .device-node.pin.cloud .pin-ring {
+      stroke: oklch(0.82 0.12 85 / 0.45);
+    }
+    .device-node.pin .pin-label-bg {
+      fill: oklch(0.16 0.01 250 / 0.82);
+      stroke: oklch(1 0 0 / 0.12);
+      stroke-width: 1;
+    }
+    .device-node.pin .pin-label {
+      fill: oklch(0.98 0.005 95);
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 600;
+      pointer-events: none;
+    }
+    .device-node.pin[data-selected="true"] .pin-dot {
+      fill: var(--color-accent-secondary);
+    }
+    .device-node.pin[data-selected="true"] .pin-ring {
+      stroke: var(--color-accent-secondary);
+      stroke-width: 3;
     }
     .device-node rect {
       fill: var(--color-surface);
@@ -724,5 +788,31 @@
       header.top { padding: 12px 16px; }
       .main { padding: 16px; }
       .stat-row { grid-template-columns: 1fr; }
-      #arch-canvas, #topo-svg { height: 420px; }
+      #arch-canvas { height: 420px; }
+      .topo-floor { max-height: min(70vh, 640px); }
+      .topo-zone .zone-title { font-size: 16px; }
+    }
+
+    /* Isolate from dashboard.css .app grid (rail columns) when navigating SPA */
+    .system-map-root {
+      min-height: 100vh;
+      min-height: 100dvh;
+      background: var(--color-bg);
+      color: var(--color-fg);
+    }
+    .system-map-root .app {
+      display: grid !important;
+      grid-template-columns: 1fr !important;
+      grid-template-rows: auto 1fr;
+      min-height: 100vh;
+      min-height: 100dvh;
+      width: 100%;
+    }
+    .system-map-root .shell {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      min-height: 0;
+    }
+    @media (max-width: 1100px) {
+      .system-map-root .shell { grid-template-columns: 1fr; }
     }
