@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest run"
   },
   "dependencies": {
     "echarts": "^6.1.0",
@@ -23,7 +24,8 @@
     "oxlint": "^1.71.0",
     "playwright": "^1.62.0",
     "typescript": "~6.0.2",
-    "vite": "^8.1.1"
+    "vite": "^8.1.1",
+    "vitest": "^5.0.1"
   },
   "description": "Solo Home AI — sovereign local-first AI property manager"
 }
